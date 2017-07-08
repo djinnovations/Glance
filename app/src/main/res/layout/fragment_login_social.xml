@@ -30,7 +30,7 @@
         android:paddingTop="6dp"
         android:text="@string/acct_txt"
         android:textAllCaps="false"
-        android:textColor="@color/colorMainAppBg"
+        android:textColor="@color/colorAppPrimaryBg"
         android:textStyle="bold" />
 
 </LinearLayout>

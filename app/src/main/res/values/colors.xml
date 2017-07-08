@@ -25,7 +25,8 @@
     <color name="colorGrey">#9E9D9D</color>
     <color name="colorAlternateWhite">#f4f4f4</color>
     <color name="colorMaterialBlack">#212121</color>
-    <color name="colorMainAppBg">#246EFB</color>
-    <color name="colorMainPress">#0054a6</color>
+
+    <color name="colorAppPrimaryBg">#246EFB</color>
+    <color name="colorPrimaryPress">#0054a6</color>
 
 </resources>

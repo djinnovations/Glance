@@ -30,7 +30,7 @@ public class SocialUtils extends SocialLoginUtil {
     private static SocialUtils socialUtils;
 
     private SocialUtils(Context context) {
-        super(context);
+        super();
         shareResults = new
                 FacebookCallback<Sharer.Result>() {
                     @Override

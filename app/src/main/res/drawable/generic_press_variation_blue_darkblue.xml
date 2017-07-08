@@ -4,11 +4,11 @@
         android:state_enabled="true"
         android:state_selected="true"
         android:state_focused="true" />-->
-    <item android:color="@color/colorMainPress" android:state_enabled="true" android:state_pressed="true" />
+    <item android:color="@color/colorPrimaryPress" android:state_enabled="true" android:state_pressed="true" />
     <!--<item android:drawable="@color/colorMainMenuBgSelected"
         android:state_enabled="true"
         android:state_selected="true" />-->
-    <item android:color="@color/colorMainAppBg" android:state_enabled="true" />
+    <item android:color="@color/colorAppPrimaryBg" android:state_enabled="true" />
 
     <item android:color="@color/blue" android:state_enabled="false" />
 

@@ -62,5 +62,10 @@
         <item name="colorAccent">@color/colorMaterialBlack</item>
     </style>
 
+    <style name="AlertDialogAnimHelp">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_fall_down</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_go_up</item>
+    </style>
+
 
 </resources>
