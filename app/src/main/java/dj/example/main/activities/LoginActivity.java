@@ -8,14 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.androidquery.callback.AjaxStatus;
-import com.google.gson.JsonSyntaxException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import dj.example.main.R;
 import dj.example.main.fragments.SocialLoginFragment;
 import dj.example.main.utils.NetworkResultValidator;
-import dj.example.main.utils.support.SocialLoginUtil;
+import dj.example.main.modules.sociallogins.SocialLoginUtil;
 
 /**
  * Created by User on 25-01-2017.

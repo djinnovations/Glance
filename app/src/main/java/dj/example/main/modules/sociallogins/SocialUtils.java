@@ -1,4 +1,4 @@
-package dj.example.main.utils.support;
+package dj.example.main.modules.sociallogins;
 
 import android.app.Activity;
 import android.content.Context;

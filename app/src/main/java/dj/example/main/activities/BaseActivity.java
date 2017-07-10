@@ -1,5 +1,6 @@
 package dj.example.main.activities;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 
@@ -15,9 +16,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import dj.example.main.R;
+import dj.example.main.model.NavigationDataObject;
 import dj.example.main.uiutils.ColoredSnackbar;
+import dj.example.main.uiutils.WindowUtils;
 import dj.example.main.utils.IDUtils;
-import dj.example.main.utils.URLHelper;
 
 /**
  * Created by User on 25-01-2017.
@@ -92,6 +95,35 @@ public abstract class BaseActivity extends AppCoreActivity {
         params.put("role", "intern");
         Log.d(TAG, "POST reqParams- queryForLogin()" + TAG + ": " + params);
         getAQuery().ajax(url, params, String.class, ajaxCallback);
+    }
+
+
+    public boolean action(NavigationDataObject navigationDataObject) {
+        int actionType = navigationDataObject.getTargetType();
+        Log.d(TAG, "actionType: "+actionType);
+        Intent intent;
+        if (actionType == NavigationDataObject.ACTIVITY){
+            Class target = navigationDataObject.getTargetClass();
+            if (target != null) {
+                intent = new Intent(this, target);
+                //add flags if any
+            }
+        }else if (actionType == NavigationDataObject.WEB_ACTIVITY){
+            
+        }else if (actionType == NavigationDataObject.LOGOUT){
+            //// TODO: 08-07-2017  perform logout 
+        }else if (actionType == NavigationDataObject.SHARE){
+            //// TODO: 08-07-2017  any share actions here 
+        }else if (actionType == NavigationDataObject.RATE_US){
+            //// TODO: 08-07-2017 rate us on playstore here 
+        }
+        return true;
+    }
+
+    public void showDialogInfo(String msg, boolean isPositive) {
+        int color;
+        color = isPositive ? R.color.colorPrimary : R.color.redStatus;
+        WindowUtils.getInstance().genericInfoMsgWithOK(this, null, msg, color);
     }
 
 

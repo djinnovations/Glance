@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryTrans">#553F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
@@ -26,6 +27,7 @@
     <color name="colorAlternateWhite">#f4f4f4</color>
     <color name="colorMaterialBlack">#212121</color>
 
+    <color name="colorGhostWhite">#e1e1e1</color>
     <color name="colorAppPrimaryBg">#246EFB</color>
     <color name="colorPrimaryPress">#0054a6</color>
 

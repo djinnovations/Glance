@@ -10,4 +10,6 @@
     <string name="login">Sign in</string>
     <string name="forgot">Forgot Password?</string>
     <string name="acct_txt">Or sign in with Company\'s account</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
 </resources>

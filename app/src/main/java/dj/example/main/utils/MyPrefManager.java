@@ -23,6 +23,14 @@ public class MyPrefManager {
     public static final String KEY_LOGIN_STATUS = "login_stat";
     public static final String KEY_LOGIN_MODE = "login_mode";
 
+    private final String KEY_IS_INTIMATION_STOP = "intimation_stat";
+    private final String KEY_INTIMATION_COUNT = "intimation_count";
+
+    private final String KEY_IS_APP_RATING_DONE = "app_rating";
+    private final String KEY_RATING_SESSION_COUNT = "app_rate_session_count";
+    private final String KEY_RATING_IS_DAYS_COUNT_STARTED = "app_rate_day_count";
+    private final String KEY_RATING_START_TIME = "app_rate_start_time";
+
     public static final String MODE_NORMAL = "normal";
     public static final String MODE_SOCIAL = "social";
 
@@ -56,5 +64,78 @@ public class MyPrefManager {
         editor.putBoolean(KEY_LOGIN_STATUS, false);
         editor.commit();
         Log.d(TAG, "clearLoginParams - MyPrefManager: " + "cleared success");
+    }
+
+
+    public void setAppRatingDone() {
+        editor.putBoolean(KEY_IS_APP_RATING_DONE, true);
+        editor.commit();
+    }
+
+    public boolean getIsAppRatingDone() {
+        Log.d("dj", "getIsAppRatingDone- DjphyPreferenceManager: " + /*pref.getBoolean(KEY_IS_APP_RATING_DONE, false)*/"true");
+        return /*pref.getBoolean(KEY_IS_APP_RATING_DONE, false)*/ true;
+    }
+
+
+    public final static int DAYS_UNTIL_PROMPT = 5;
+    public final static int LAUNCHES_UNTIL_PROMPT = 5;
+
+    public boolean canStartForRatingApp() {
+        if (getDaysDiffFromStarted() >= DAYS_UNTIL_PROMPT
+                || getSessionCount() >= LAUNCHES_UNTIL_PROMPT) {
+            if (getSessionCount() >= LAUNCHES_UNTIL_PROMPT) {
+                Log.d(TAG, "canStartForRatingApp(): true");
+                return true;
+            }
+        }
+        Log.d(TAG, "canStartForRatingApp(): false");
+        return false;
+    }
+
+    /*private void setTriggerForRating() {
+        editor.putBoolean(KEY_RATING_TRIGGER, true);
+    }*/
+
+    public void updateSessionCounts() {
+        editor.putInt(KEY_RATING_SESSION_COUNT, getSessionCount() + 1);
+        editor.commit();
+    }
+
+    public void resetAppRateSessionCount() {
+        editor.putInt(KEY_RATING_SESSION_COUNT, 0);
+        editor.commit();
+    }
+
+    private int getSessionCount() {
+        return pref.getInt(KEY_RATING_SESSION_COUNT, 0);
+    }
+
+    public void startDayCountForRating() {
+        if (getIsDaysCountStartedForRating())
+            return;
+        setDaysCountStartedForRating();
+    }
+
+    private int getDaysDiffFromStarted() {
+        int difference = Math.abs((int) ((System.currentTimeMillis() / (24 * 60 * 60 * 1000))
+                - (int) (getStartTimeForRating() / (24 * 60 * 60 * 1000))));
+        Log.d("dj", "getDaysDiffFromStarted- DjphyPreferenceManager: " + difference);
+        return difference;
+    }
+
+    private boolean getIsDaysCountStartedForRating() {
+        return pref.getBoolean(KEY_RATING_IS_DAYS_COUNT_STARTED, false);
+    }
+
+    private void setDaysCountStartedForRating() {
+        editor.putBoolean(KEY_RATING_IS_DAYS_COUNT_STARTED, true);
+        editor.putLong(KEY_RATING_START_TIME, System.currentTimeMillis());
+        editor.commit();
+    }
+
+
+    private long getStartTimeForRating() {
+        return pref.getLong(KEY_RATING_START_TIME, System.currentTimeMillis());
     }
 }
