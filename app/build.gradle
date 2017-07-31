@@ -75,8 +75,11 @@ dependencies {
     compile('com.twitter.sdk.android:twitter:1.3.1@aar') {
         transitive = true;
     }
-    compile 'com.google.android.gms:play-services-auth:10.2.4'
-    compile 'com.google.android.gms:play-services-plus:10.2.4'
+
+    final PLAY_SERVICES_VERSION = '11.0.2'
+    compile "com.google.android.gms:play-services-auth:$PLAY_SERVICES_VERSION"
+    compile "com.google.android.gms:play-services-plus:$PLAY_SERVICES_VERSION"
+    compile "com.google.firebase:firebase-messaging:$PLAY_SERVICES_VERSION"
 
     compile 'com.github.rey5137:material:1.1.1'
     compile 'com.mikepenz:iconics-core:2.5.3@aar'

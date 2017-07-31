@@ -85,8 +85,7 @@ public class LoginActivity extends BaseActivity{
         super.serverCallEnds(id, url, json, status);
         if (id == SOCIAL_LOGIN_CALL){
             try {
-                boolean success = NetworkResultValidator.getInstance().isResultOK(url, (String) json, status, null,
-                        progressBar, this);
+                boolean success = NetworkResultValidator.getInstance().isResultOK((String) json, status, progressBar);
                 if (success) {
                     /*LoginResponse response = new Gson().fromJson((String) json, LoginResponse.class);
                     response.onParse();*/

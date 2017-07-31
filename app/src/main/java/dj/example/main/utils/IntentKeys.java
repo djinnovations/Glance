@@ -6,4 +6,5 @@ package dj.example.main.utils;
 public class IntentKeys {
 
     public static final String TITLE = "aw.title";
+    public static final String PUSH_NOTIFICATION_CALL = "fcm.data";
 }

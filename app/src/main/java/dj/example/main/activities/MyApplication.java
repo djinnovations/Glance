@@ -19,7 +19,7 @@ public class MyApplication extends Application {
 
     public static final String API_KEY_TW = "";
     public static final String API_SECRET_TW = "";
-    public static final String OAUTH_WEBCLIENT_ID_GL = "";
+    public static final String OAUTH_WEBCLIENT_ID_GL = "1098955210882-p9dhi34jaj4bjgd2fpsf9d2lf5rf7qd2.apps.googleusercontent.com";
     public static final String ERR_MSG_NETWORK = "network ERR";
 
 

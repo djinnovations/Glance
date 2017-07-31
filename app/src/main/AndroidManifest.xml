@@ -16,6 +16,21 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
 
+        <!-- for FCM -->
+
+        <service android:name=".modules.fcm.MyFcmListenerService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".modules.fcm.MyFcmInstanceIDListenerService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- end FCM -->
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider406364016222124"

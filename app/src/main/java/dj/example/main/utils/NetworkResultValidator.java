@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.androidquery.callback.AjaxCallback;
@@ -35,10 +36,25 @@ public class NetworkResultValidator {
 
 
 
-    public boolean isResultOK(String url, String value,final AjaxStatus status,String msg,View hostPort,Context activityContext)
+    public boolean isResultOK(String value, final AjaxStatus status, View hostPort)
     {
-        return isResultOK( url,  value,   status, msg, hostPort, activityContext,null);
+        if (!TextUtils.isEmpty(value))
+            return true;
+        String serverMsg = "Internal Err";
+        if (status != null){
+            if (!TextUtils.isEmpty(status.getError()))
+                serverMsg = status.getError();
+            else if (status.getCode() == 200 && !(TextUtils.isEmpty(status.getMessage())))
+                serverMsg = status.getMessage();
+        }
+        Snackbar snackbar = Snackbar.make(hostPort, serverMsg, Snackbar.LENGTH_SHORT);
+        ColoredSnackbar.alert(snackbar).show();
+        return false;
+        //return isResultOK( url,  value,   status, msg, hostPort, activityContext,null);
     }
+
+
+
     public boolean isResultOK(String url, String value,final AjaxStatus status,String msg,View view,Context context,
                                      AjaxCallback callBack)
     {
