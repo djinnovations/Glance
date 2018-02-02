@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
 import dj.example.main.model.NavigationDataObject;
@@ -25,7 +25,7 @@ public class WebActivity extends BaseActivity {
 
     private static final String TAG_CONTACT_US = "goladorn.ContactUs";
     private static final String TAG_PEOPLE = "goladorn.People";
-    @Bind(R.id.mainHolder)
+    @BindView(R.id.mainHolder)
     FrameLayout mainHolder;
 
     @Override
@@ -75,6 +75,11 @@ public class WebActivity extends BaseActivity {
 
         BaseFragment mActivePage = BaseFragment.newWebViewInstance(navigationObject);
         fragmentManager.beginTransaction().replace(R.id.mainHolder, mActivePage).commit();
+
+    }
+
+    @Override
+    protected void onGarbageCollection() {
 
     }
 

@@ -47,14 +47,17 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import dj.example.main.R;
+import dj.example.main.activities.BaseActivity;
 import dj.example.main.activities.MyApplication;
 import dj.example.main.model.LoginInputParams;
+import dj.example.main.model.UserInfo;
 import dj.example.main.uiutils.ResourceReader;
+import dj.example.main.utils.MyPrefManager;
+import dj.example.main.utils.RandomUtils;
+import dj.example.main.utils.UserSession;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -68,6 +71,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
     private static final String PLATFORM_GOOGLE = "google";
     private static SocialLoginUtil ourInstance;
     private static Context mAppContext;
+    private String login_mode = "";
 
     public static SocialLoginUtil getInstance() {
         mAppContext = MyApplication.getInstance();
@@ -88,7 +92,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
      * Facebook stuffs
      ***********************/
     protected CallbackManager mFbCallbackManager;
-    protected String[] permissionArr = new String[]{"user_location", "user_birthday", "email"};
+    protected String[] permissionArr = new String[]{"public_profile", "user_location", "user_birthday", "email"};
     /*******************************************************/
     //private UserSession mUserSession;
     /*****************
@@ -124,7 +128,9 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
         /**************************************Gmail stuffs**********************************************/
         //// TODO: 5/6/2016
         mGoogleSignInOpt = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(Plus.SCOPE_PLUS_LOGIN, new Scope("email"))
+                //.requestScopes(Plus.SCOPE_PLUS_LOGIN, new Scope("email"))
+                .requestScopes(new Scope("profile"))
+                //.requestScopes(new Scope(Scopes.PLUS_LOGIN))
                 .requestIdToken(MyApplication.OAUTH_WEBCLIENT_ID_GL)
                 .build();
 
@@ -132,6 +138,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, mGoogleSignInOpt)
+                .addApi(Plus.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).build();
         MyApplication.getInstance().getUiHandler().postDelayed(new Runnable() {
@@ -172,7 +179,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
 
     public void performGoogleLogout() {
         indicateSignedOut();
-        Log.d(TAG, "performGoogleLogout() signed in stat"+isSignedIn);
+        Log.d(TAG, "performGoogleLogout() signed in stat" + isSignedIn);
         if (!isSignedIn)
             return;
         /*if (mGoogleApiClient.isConnected()) {*/
@@ -190,7 +197,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
 
 
     public boolean isGoogleConnected() {
-        if (!mGoogleApiClient.isConnected()){
+        if (!mGoogleApiClient.isConnected()) {
             mGoogleApiClient.connect();
         }
         return mGoogleApiClient.isConnected();
@@ -198,6 +205,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
 
 
     private Activity mActivity;
+
     public void onFacebookLogin(Activity mActivity) {
         if (isFbSignedIn) {
             performFbLogout();
@@ -207,6 +215,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
     }
 
     private boolean isFbSignedIn;
+
     public void performFbLogout() {
         if (!isFbSignedIn)
             return;
@@ -244,30 +253,27 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Log.v(TAG, " setResultListenerFb : " + object.toString());
                         try {
+                            login_mode = MyPrefManager.MODE_SOCIAL_FB;
                             LoginInputParams params = new LoginInputParams();
                             String name = "N/A";
                             name = object.getString("name");
                             params.setName(name);
-                            params.setImage(object.getString("picture"));
-                            params.setEmail(object.getString("email"));
+                            params.setImage(object.getJSONObject("picture").getJSONObject("data").getString("url"));
+                            if (!object.isNull("email"))
+                                params.setEmail(object.getString("email"));
+                            if (!object.isNull("birthday"))
+                                params.setBirthday(object.getString("birthday"));
+                            if (!object.isNull("location"))
+                                params.setLocation(object.getJSONObject("location").getString("name"));
+                            params.setGender(object.getString("gender"));
                             params.setOauth_access_token(loginResult.getAccessToken().getToken());
                             params.setUid(loginResult.getAccessToken().getUserId());
                             params.setProvider("facebook");
                             params.setResource_class("User");
-                            List<String> list = new ArrayList<String>();
+                            /*List<String> list = new ArrayList<String>();
                             list.add("intern");
-                            params.setRoles(list);
-                            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                            try {
-                                JSONObject jsonObject = new JSONObject(ow.writeValueAsString(params));
-                                /*if (mActivity instanceof BaseActivity){
-                                    ((BaseActivity) mActivity).queryForSocialLogin(jsonObject);
-                                }*/
-                            } catch (JsonProcessingException e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(mAppContext, "Hi "
-                                    + name + ", Welcome to Awign\nAuthorizing...please wait", Toast.LENGTH_LONG).show();
+                            params.setRoles(list);*/
+                            checkLoginStatAndProceed(params);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -375,7 +381,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    public void indicateSignedOut(){
+    public void indicateSignedOut() {
         //Application.getInstance().getPrefManager().setSocialLoginStat(false);
     }
 
@@ -433,9 +439,14 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    private void fillGoogleLoginInputs(GoogleSignInAccount signInAccount){
+    public String getLogin_mode() {
+        return login_mode;
+    }
+
+    private void fillGoogleLoginInputs(GoogleSignInAccount signInAccount) {
         Log.v(TAG, " fillGoogleLoginInputs : " + signInAccount.toString());
         try {
+            login_mode = MyPrefManager.MODE_SOCIAL_GL;
             LoginInputParams params = new LoginInputParams();
             String name = "N/A";
             name = signInAccount.getDisplayName();
@@ -444,24 +455,58 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
             if (uri != null)
                 params.setImage(uri.toString());
             params.setEmail(signInAccount.getEmail());
+            //params.setGender();
             params.setOauth_access_token(signInAccount.getIdToken());
             params.setUid(signInAccount.getId());
             params.setProvider("google");
             params.setResource_class("User");
-            List<String> list = new ArrayList<>();
+            /*List<String> list = new ArrayList<>();
             list.add("intern");
-            params.setRoles(list);
+            params.setRoles(list);*/
+            UserInfo userInfo = new UserInfo();
+            userInfo.emailId = params.getEmail();
+            userInfo.name = params.getName();
+            userInfo.profileImgUrl = params.getImage();
+            userInfo.uniqueId = params.getUid();
+            UserSession.getInstance().setUserInfo(userInfo);
+
+            checkLoginStatAndProceed(params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void checkLoginStatAndProceed(LoginInputParams params){
+        try {
+            UserInfo userInfo = new UserInfo();
+            userInfo.emailId = params.getEmail();
+            userInfo.name = params.getName();
+            userInfo.profileImgUrl = params.getImage();
+            userInfo.uniqueId = params.getUid();
+            userInfo.gender = params.getGender();
+            userInfo.location = params.getLocation();
+            userInfo.birthday = params.getBirthday();
+            UserSession.getInstance().setUserInfo(userInfo);
+
+            if (MyPrefManager.getInstance().getLoginStatus()){
+                RandomUtils.getInstance().launchHome(mActivity, true);
+                return;
+            }
+
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             try {
                 JSONObject jsonObject = new JSONObject(ow.writeValueAsString(params));
-                /*if (mActivity instanceof BaseActivity){
+                if (mActivity instanceof BaseActivity) {
                     ((BaseActivity) mActivity).queryForSocialLogin(jsonObject);
-                }*/
+                }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
+            /*
+Authorizing...please wait*/
             Toast.makeText(mAppContext, "Hi "
-                    + name + ", Welcome to Awign\nAuthorizing...please wait", Toast.LENGTH_LONG).show();
+                    + params.getName() + ", Welcome to App", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }

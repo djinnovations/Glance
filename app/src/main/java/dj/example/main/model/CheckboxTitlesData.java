@@ -1,7 +1,7 @@
 package dj.example.main.model;
 
 /**
- * Created by User on 26-01-2017.
+ * Created by DJphy on 26-01-2017.
  */
 
 public class CheckboxTitlesData {

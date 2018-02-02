@@ -23,7 +23,7 @@ import dj.example.main.uiutils.WindowUtils;
 import dj.example.main.utils.IDUtils;
 
 /**
- * Created by User on 25-01-2017.
+ * Created by DJphy on 25-01-2017.
  */
 
 public abstract class BaseActivity extends AppCoreActivity {

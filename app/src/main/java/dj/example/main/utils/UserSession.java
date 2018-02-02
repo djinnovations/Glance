@@ -1,7 +1,9 @@
 package dj.example.main.utils;
 
+import dj.example.main.model.UserInfo;
+
 /**
- * Created by User on 31-07-2017.
+ * Created by DJphy on 31-07-2017.
  */
 
 public class UserSession {
@@ -26,5 +28,15 @@ public class UserSession {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    private UserInfo userInfo;
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 }

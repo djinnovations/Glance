@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,22 +21,24 @@ import android.widget.TextView;
 
 import com.nshmura.recyclertablayout.RecyclerTabLayout;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
 import dj.example.main.activities.MyApplication;
-import dj.example.main.activities.TwoTabsBaseActivity;
+import dj.example.main.activities.TabsBaseActivity;
 import dj.example.main.redundant.BaseFragment;
+import dj.example.main.uiutils.DisplayProperties;
 
 public class HomePage extends BaseFragment implements ViewPager.OnPageChangeListener{
 
-    @Bind(R.id.disableApp)
+    @BindView(R.id.disableApp)
     View disableApp;
 
-    public static final int FILTER_APPLY = 2;
+    protected DisplayProperties displayProperties;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -44,38 +47,54 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
 
     @Override
     protected void garbageCollectorCall() {
-
+        pagerAdapter = null;
+        tabIndicatorAdapter = null;
+        positionTitle = null;
+        registeredFragments = null;
     }
 
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
 
     FragmentStatePagerAdapter pagerAdapter;
+    ArrayList<Pair<Class, String>> primaryTabFragments = new ArrayList<>();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        setInitials();
+
         pagerAdapter = new TempPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         setUpTabLayout(view);
         viewPager.addOnPageChangeListener(this);
     }
 
+    private void setInitials(){
+        int orient = this.getResources().getConfiguration().orientation;
+        displayProperties = DisplayProperties.getInstance(orient);
+        if (getActivity() instanceof TabsBaseActivity) {
+            numOfPages = ((TabsBaseActivity) getActivity()).getTabFragmentsList().size();
+            primaryTabFragments = ((TabsBaseActivity) getActivity()).getTabFragmentsList();
+        }
+    }
+
     RecyclerTabLayout tabLayoutPrimary;
 
     private void setUpTabLayout(View rootView) {
         final View tabLayout = rootView.findViewById(R.id.indicator);
-        if (getActivity() instanceof TwoTabsBaseActivity){
-            if (((TwoTabsBaseActivity) getActivity()).getPageIndicator() != null) {
+        if (getActivity() instanceof TabsBaseActivity){
+            if (((TabsBaseActivity) getActivity()).getPageIndicator() != null) {
                 if (tabLayout != null)
                     tabLayout.setVisibility(View.GONE);
-                tabLayoutPrimary = (RecyclerTabLayout) ((TwoTabsBaseActivity) getActivity()).getPageIndicator();
+                tabLayoutPrimary = (RecyclerTabLayout) ((TabsBaseActivity) getActivity()).getPageIndicator();
                 RecyclerTabLayout.Adapter indicatorAdapter = getRecyclerTabIndicator(viewPager);
                 if (indicatorAdapter != null)
                     tabLayoutPrimary.setUpWithAdapter(indicatorAdapter);
                 tabLayoutPrimary.getAdapter().notifyDataSetChanged();
                 tabLayoutPrimary.invalidate();
+                return;
             }
         }
         if (tabLayout instanceof TabLayout) {
@@ -88,7 +107,7 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
         }
     }
 
-    private final int numOfPages = 2;
+    private int numOfPages = 2;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -126,10 +145,23 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0)
+           /* if (position == 0) {
                 return new TabFragment1();
-            else if (position == 1)
+            }
+            else if (position == 1) {
                 return new TabFragment2();
+            }*/
+            try {
+                return  (Fragment) primaryTabFragments.get(position).first.getConstructor().newInstance();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
@@ -208,8 +240,9 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
             super(viewPager);
             //HomePage.viewPager = viewPager;
             dataList.clear();
-            dataList.add("Item-1");
-            dataList.add("Item-2");
+            for (Pair<Class, String> pair: primaryTabFragments) {
+                dataList.add(pair.second);
+            }
         }
 
         List<String> dataList = new ArrayList<>();
@@ -242,15 +275,14 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            @Bind(R.id.textView)
+            @BindView(R.id.textView)
             public TextView textView;
-            @Bind(R.id.selected)
+            @BindView(R.id.selected)
             public View selected;
 
-            @Bind(R.id.tabParent)
+            @BindView(R.id.tabParent)
             RelativeLayout tabParent;
             String data;
-
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -270,9 +302,10 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
                     @Override
                     public void onGlobalLayout() {
                         try {
-                            int indicatorWidth = tabLayoutPrimary.getWidth();
+                            int indicatorWidth = /*tabLayoutPrimary.getWidth()*/ (int) (15 * displayProperties.getXPixelsPerCell());
+
                             Log.d("dj", " indicator width: " + indicatorWidth);
-                            tabParent.getLayoutParams().width = indicatorWidth / 2;
+                            tabParent.getLayoutParams().width = /*indicatorWidth / 2*/indicatorWidth;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                 tabLayoutPrimary.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             } else

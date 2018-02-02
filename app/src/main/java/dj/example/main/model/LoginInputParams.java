@@ -1,21 +1,47 @@
 package dj.example.main.model;
 
-import java.util.List;
-
 /**
- * Created by User on 26-01-2017.
+ * Created by DJphy on 26-01-2017.
  */
 
 public class LoginInputParams {
 
-    private String email;
+    private String email=  "";
     private String uid;
     private String oauth_access_token;
-    private String name;
+    private String name = "";
     private String provider;
     private String image;
     private String resource_class;
-    private List<String> roles;
+    private String location;
+    private String gender;
+    private String birthday;
+    //private List<String> roles;
+
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     public String getEmail() {
         return email;
@@ -73,11 +99,11 @@ public class LoginInputParams {
         this.resource_class = resource_class;
     }
 
-    public List<String> getRoles() {
+    /*public List<String> getRoles() {
         return roles;
     }
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
-    }
+    }*/
 }

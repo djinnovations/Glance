@@ -11,28 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
 import dj.example.main.uiutils.ColoredSnackbar;
 
 /**
- * Created by User on 09-01-2017.
+ * Created by DJphy on 09-01-2017.
  */
 
-public class LoginUserPasswordFragment extends Fragment {
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login_normal, container, false);
-        return view;
-    }
+public class LoginUserPasswordFragment extends PrimaryBaseFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
 
         btnLoginAcct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,11 +40,26 @@ public class LoginUserPasswordFragment extends Fragment {
         });
     }
 
-    @Bind(R.id.etUserName)
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_login_normal;
+    }
+
+    @Override
+    protected void onGarbageCollection() {
+
+    }
+
+    @Override
+    protected String getFragmentTitle() {
+        return "";
+    }
+
+    @BindView(R.id.etUserName)
     EditText etUserName;
-    @Bind(R.id.etPassword)
+    @BindView(R.id.etPassword)
     EditText etPassword;
-    @Bind(R.id.btnLoginAcct)
+    @BindView(R.id.btnLoginAcct)
     Button btnLoginAcct;
 
 

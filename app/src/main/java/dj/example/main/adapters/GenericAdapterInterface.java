@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 
 /**
- * Created by User on 26-01-2017.
+ * Created by DJphy on 26-01-2017.
  */
 
 public interface GenericAdapterInterface {

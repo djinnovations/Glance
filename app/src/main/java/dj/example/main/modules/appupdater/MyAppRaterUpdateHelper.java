@@ -17,7 +17,7 @@ import dj.example.main.activities.MyApplication;
 import dj.example.main.utils.MyPrefManager;
 
 /**
- * Created by User on 27-06-2016.
+ * Created by DJphy on 27-06-2016.
  */
 public class MyAppRaterUpdateHelper {
     

@@ -143,4 +143,12 @@ public abstract class AppCoreActivity extends AppCompatActivity {
             }
         }, 1000);
     }
+
+    protected abstract void onGarbageCollection();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        onGarbageCollection();
+    }
 }

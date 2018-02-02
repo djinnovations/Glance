@@ -6,7 +6,7 @@ import dj.example.main.activities.MyApplication;
 import dj.example.main.utils.IDUtils;
 
 /**
- * Created by User on 08-07-2017.
+ * Created by DJphy on 08-07-2017.
  */
 
 public class NavigationDataObject implements MyApplication.IFragmentData{

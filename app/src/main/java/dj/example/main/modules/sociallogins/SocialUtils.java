@@ -22,7 +22,7 @@ import dj.example.main.activities.MainActivity;
 import dj.example.main.activities.MyApplication;
 
 /**
- * Created by User on 18-10-2016.
+ * Created by DJphy on 18-10-2016.
  */
 public class SocialUtils extends SocialLoginUtil {
 

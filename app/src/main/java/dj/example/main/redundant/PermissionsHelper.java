@@ -9,7 +9,7 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 
 /**
- * Created by User on 09-07-2017.
+ * Created by DJphy on 09-07-2017.
  */
 
 public class PermissionsHelper {

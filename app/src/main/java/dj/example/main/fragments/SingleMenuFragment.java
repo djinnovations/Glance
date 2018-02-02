@@ -13,13 +13,13 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
 import dj.example.main.uiutils.UiRandomUtils;
 
 /**
- * Created by User on 20-12-2016.
+ * Created by DJphy on 20-12-2016.
  */
 
 public abstract class SingleMenuFragment extends Fragment {
@@ -33,7 +33,7 @@ public abstract class SingleMenuFragment extends Fragment {
     public abstract boolean isAddSnapper();
 
 
-    @Bind(R.id.llBody)
+    @BindView(R.id.llBody)
     LinearLayout llBody;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public abstract class SingleMenuFragment extends Fragment {
         setUpRecycleView();
     }
 
-    @Bind(R.id.rvMenu)
+    @BindView(R.id.rvMenu)
     RecyclerView rvMenu;
     private void setUpRecycleView() {
         RecyclerView.LayoutManager mLayoutManager = /*new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)*/
@@ -69,4 +69,11 @@ public abstract class SingleMenuFragment extends Fragment {
 
     public abstract void changeData(List dataList);
 
+    protected abstract void onGarbageCollection();
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        onGarbageCollection();
+    }
 }

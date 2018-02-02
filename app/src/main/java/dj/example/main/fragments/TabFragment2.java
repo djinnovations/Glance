@@ -11,20 +11,35 @@ import android.widget.TextView;
 import dj.example.main.R;
 
 /**
- * Created by User on 10-07-2017.
+ * Created by DJphy on 10-07-2017.
  */
 
-public class TabFragment2 extends Fragment{
+public class TabFragment2 extends PrimaryBaseFragment{
 
-    @Nullable
+    /*@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_layout_dummy, container, false);
-    }
+    }*/
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((TextView) view.findViewById(R.id.tvItem)).setText("Tab 2");
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_layout_dummy;
+    }
+
+    @Override
+    protected void onGarbageCollection() {
+
+    }
+
+    @Override
+    protected String getFragmentTitle() {
+        return "Tab - 2";
     }
 }

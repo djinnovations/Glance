@@ -12,14 +12,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
 import dj.example.main.activities.MyApplication;
 import dj.example.main.model.CheckboxTitlesData;
 
 /**
- * Created by User on 26-01-2017.
+ * Created by DJphy on 26-01-2017.
  */
 
 public class CheckboxTitleAdapter extends RecyclerView.Adapter<CheckboxTitleAdapter.ViewHolder> implements GenericAdapterInterface{
@@ -81,9 +81,9 @@ public class CheckboxTitleAdapter extends RecyclerView.Adapter<CheckboxTitleAdap
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        @Bind(R.id.tvItem)
+        @BindView(R.id.tvItem)
         TextView tvItem;
-        @Bind(R.id.checkbox)
+        @BindView(R.id.checkbox)
         CheckBox checkBox;
 
         ViewHolder(View itemView) {

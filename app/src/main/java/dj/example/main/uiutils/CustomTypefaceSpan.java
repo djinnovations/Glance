@@ -1,7 +1,7 @@
 package dj.example.main.uiutils;
 
 /**
- * Created by User on 17-01-2017.
+ * Created by DJphy on 17-01-2017.
  */
 import android.annotation.SuppressLint;
 import android.graphics.Paint;

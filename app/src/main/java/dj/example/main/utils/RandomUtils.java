@@ -1,15 +1,15 @@
 package dj.example.main.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.activities.MainActivity;
 
 /**
- * Created by User on 08-07-2017.
+ * Created by DJphy on 08-07-2017.
  */
 
 public class RandomUtils {
@@ -57,5 +57,13 @@ public class RandomUtils {
     public boolean isPhone(Context context) {
         boolean isTab = isTablet(context);
         return !isTab;
+    }
+
+    public void launchHome(Activity activity, boolean isNewTask){
+        Intent intent = new Intent(activity, MainActivity.class);
+        if (isNewTask)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+        //finish();
     }
 }

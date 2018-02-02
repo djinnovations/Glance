@@ -61,7 +61,7 @@
 
             <com.nshmura.recyclertablayout.RecyclerTabLayout
                 android:id="@+id/indicator"
-                android:layout_width="210dp"
+                android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginStart="50dp"
                 app:rtl_tabIndicatorColor="#ff000000"
@@ -73,6 +73,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/indicator"
                 android:layout_marginEnd="2dp"
+                android:visibility="gone"
                 android:background="@color/colorPrimary" />
         </RelativeLayout>
 

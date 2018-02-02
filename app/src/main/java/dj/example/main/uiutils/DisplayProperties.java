@@ -39,6 +39,8 @@ public class DisplayProperties {
     public static int ORIENTATION_LANDSCAPE = 0;
     public static int ORIENTATION_PORTRAIT = 1;
 
+    private static int mScreenOrientation;
+
     private DisplayProperties(int orientation) {
         metrics = new DisplayMetrics();
         wm = (WindowManager) MyApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
@@ -60,6 +62,10 @@ public class DisplayProperties {
             //DisplayProperties.orientation = screenOrientation;
             /**Creating an instance of Database helper class to fetch necessary data */
             if (mDispPropInstance == null) {
+                mDispPropInstance = new DisplayProperties(screenOrientation);
+            }
+            else if(mScreenOrientation != screenOrientation){
+                mScreenOrientation = screenOrientation;
                 mDispPropInstance = new DisplayProperties(screenOrientation);
             }
             return mDispPropInstance;

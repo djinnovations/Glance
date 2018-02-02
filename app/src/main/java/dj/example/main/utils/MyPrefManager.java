@@ -6,7 +6,7 @@ import android.util.Log;
 import dj.example.main.activities.MyApplication;
 
 /**
- * Created by User on 08-07-2017.
+ * Created by DJphy on 08-07-2017.
  */
 
 public class MyPrefManager {
@@ -32,8 +32,10 @@ public class MyPrefManager {
     private final String KEY_RATING_IS_DAYS_COUNT_STARTED = "app_rate_day_count";
     private final String KEY_RATING_START_TIME = "app_rate_start_time";
 
-    public static final String MODE_NORMAL = "normal";
     public static final String MODE_SOCIAL = "social";
+    public static final String MODE_NORMAL = "normal";
+    public static final String MODE_SOCIAL_GL = "social_gl";
+    public static final String MODE_SOCIAL_FB = "social_fb";
 
     private MyPrefManager() {
         pref = MyApplication.getInstance().getSharedPreferences(PREF_NAME, PRIVATE_MODE);

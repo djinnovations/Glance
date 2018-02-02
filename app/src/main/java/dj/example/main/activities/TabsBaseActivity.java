@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -14,7 +15,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import dj.example.main.R;
 import dj.example.main.model.NavigationDataObject;
 import dj.example.main.modules.appupdater.MyAppRaterUpdateHelper;
@@ -24,24 +25,27 @@ import dj.example.main.uiutils.ColoredSnackbar;
 import dj.example.main.utils.MyPrefManager;
 
 /**
- * Created by User on 10-07-2017.
+ * Created by DJphy on 10-07-2017.
  */
 
-public class TwoTabsBaseActivity extends BaseDrawerActivity {
+public abstract class TabsBaseActivity extends BaseDrawerActivity {
 
-    private BaseFragment activePage;
-    private NavigationDataObject activePageData;
-    private List<NavigationDataObject> history = new ArrayList<>();
-    @Bind(R.id.disableApp)
+    protected BaseFragment activePage;
+    protected NavigationDataObject activePageData;
+    protected List<NavigationDataObject> history = new ArrayList<>();
+    @BindView(R.id.disableApp)
     View disableApp;
-    @Bind(R.id.progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @Bind(R.id.layoutParent)
+    @BindView(R.id.layoutParent)
     ViewGroup layoutParent;
 
     RelativeLayout rlMain;
-    @Bind(R.id.indicator)
+    @BindView(R.id.indicator)
     View indicator;
+
+
+    public abstract ArrayList<Pair<Class, String>> getTabFragmentsList();
 
     public View getPageIndicator() {
         return indicator;
@@ -76,12 +80,14 @@ public class TwoTabsBaseActivity extends BaseDrawerActivity {
         setContentView(R.layout.app_bar_main);
 
         rlMain = (RelativeLayout) findViewById(R.id.rlMain);
-        NavigationDataObject navigationDataObject = MyApplication.getInstance().getNavigationObj(R.id.nav_home);
+        NavigationDataObject navigationDataObject = getPrimaryNavigationObj();
         if (navigationDataObject != null)
             action(navigationDataObject);
 
-        MyPrefManager.getInstance().updateSessionCounts();
+        //MyPrefManager.getInstance().updateSessionCounts();
     }
+
+    protected abstract NavigationDataObject getPrimaryNavigationObj();
 
     /*private AppTourGuideHelper mTourHelper;
 
@@ -148,7 +154,7 @@ public class TwoTabsBaseActivity extends BaseDrawerActivity {
                     ft.commit();
                     activePage = fragment;
                     activePageData = navigationDataObject;
-                    if (backEntry == false)
+                    if (!backEntry)
                         history.add(activePageData);
                     backEntry = false;
                     return true;

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.androidquery.callback.AjaxStatus;
 import com.squareup.picasso.Picasso;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dj.example.main.R;
@@ -30,9 +30,9 @@ import dj.example.main.model.NavigationDataObject;
  */
 public abstract class BaseDrawerActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    @Bind(R.id.drawerLayout)
+    @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-    @Bind(R.id.vNavigation)
+    @BindView(R.id.vNavigation)
     NavigationView vNavigation;
     Toolbar toolbar;
 

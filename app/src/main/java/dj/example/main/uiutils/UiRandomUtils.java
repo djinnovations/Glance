@@ -16,7 +16,7 @@ import com.google.android.gms.common.SignInButton;
 import dj.example.main.activities.MyApplication;
 
 /**
- * Created by User on 18-12-2016.
+ * Created by DJphy on 18-12-2016.
  */
 
 public class UiRandomUtils {
