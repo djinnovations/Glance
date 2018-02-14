@@ -22,7 +22,7 @@ import dj.example.main.model.CheckboxTitlesData;
  * Created by DJphy on 26-01-2017.
  */
 
-public class CheckboxTitleAdapter extends RecyclerView.Adapter<CheckboxTitleAdapter.ViewHolder> implements GenericAdapterInterface{
+public class CheckboxTitleAdapter extends RecyclerView.Adapter<CheckboxTitleAdapter.ViewHolder> implements GenericAdapterInterface {
 
     List<CheckboxTitlesData> dataList = new ArrayList<>();
     private CheckboxTitlesData previousSelection;
@@ -30,12 +30,17 @@ public class CheckboxTitleAdapter extends RecyclerView.Adapter<CheckboxTitleAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(getRootLayout(), parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(getRootLayout(viewType), parent, false);
         return new ViewHolder(view);
     }
 
     public CheckboxTitleAdapter(MyApplication.MenuSelectionListener listener){
         this.listener = listener;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return /*dataList.get(position).getViewType()*/0;
     }
 
     @Override
@@ -70,13 +75,18 @@ public class CheckboxTitleAdapter extends RecyclerView.Adapter<CheckboxTitleAdap
     }
 
     @Override
-    public int getRootLayout() {
+    public int getRootLayout(int viewType) {
         return R.layout.adapter_title_checkbox;
     }
 
     @Override
     public void setOnClickListener(RecyclerView.ViewHolder holder) {
         holder.itemView.setOnClickListener((View.OnClickListener) holder);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder getViewHolder(View view, int viewType) {
+        return null;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

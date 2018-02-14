@@ -4,12 +4,11 @@ import android.app.Application;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import dj.example.main.R;
-import dj.example.main.fragments.HomePage;
+import dj.example.main.fragments.HomeTagFragment;
 import dj.example.main.model.NavigationDataObject;
 
 /**
@@ -52,12 +51,15 @@ public class MyApplication extends Application {
     }
     private void setMenuItems(){
         menuItems.clear();
-        menuItems.put(R.id.nav_menu_1, new NavigationDataObject(R.id.nav_menu_1, MainActivity.class, NavigationDataObject.ACTIVITY));
-        menuItems.put(R.id.nav_menu_2, new NavigationDataObject(R.id.nav_menu_2, null, NavigationDataObject.LOGOUT));
-        menuItems.put(R.id.nav_menu_3, new NavigationDataObject(R.id.nav_menu_3, null, NavigationDataObject.RATE_US));
-        menuItems.put(R.id.nav_menu_4, new NavigationDataObject(R.id.nav_menu_4, WebActivity.class, "titleofwebactivity"
-                ,NavigationDataObject.ACTIVITY, "urlhere"));
-        menuItems.put(R.id.nav_home, new NavigationDataObject(R.id.nav_home, HomePage.class, NavigationDataObject.FRAGMENT_VIEW));
+        menuItems.put(R.id.nav_menu_home, new NavigationDataObject(R.id.nav_menu_home, HomeTagFragment.class, NavigationDataObject.FRAGMENT_VIEW));
+        menuItems.put(R.id.nav_menu_fav, new NavigationDataObject(R.id.nav_menu_fav, MainActivity.class, NavigationDataObject.ACTIVITY));
+        menuItems.put(R.id.nav_menu_settings, new NavigationDataObject(R.id.nav_menu_settings, null, NavigationDataObject.ACTIVITY));
+        menuItems.put(R.id.nav_menu_profile, new NavigationDataObject(R.id.nav_menu_profile,
+                null, NavigationDataObject.ACTIVITY));
+        menuItems.put(R.id.nav_menu_about, new NavigationDataObject(R.id.nav_menu_about, WebActivity.class, "About Us",
+                NavigationDataObject.WEB_ACTIVITY, "urlhere"));
+        menuItems.put(R.id.nav_menu_logout, new NavigationDataObject(R.id.nav_menu_logout, LoginActivity.class, NavigationDataObject.LOGOUT));
+
     }
 
 

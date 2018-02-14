@@ -4,7 +4,7 @@
     <!--button_disabled-->
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
+            <corners android:radius="0dp"/>
             <padding android:bottom="3dp" android:right="3dp" android:top="3dp" android:left="3dp"/>
             <stroke android:width="1dip" android:color="@color/colorWhite" />
             <gradient  android:angle="-90"  android:startColor="@color/colorWhite" android:endColor="@color/colorWhite"  />
@@ -15,7 +15,7 @@
     <item android:state_pressed="true"
         android:state_enabled="true">
         <shape android:shape="rectangle"  >
-            <corners android:radius="2dp"/>
+            <corners android:radius="0dp"/>
             <padding android:bottom="3dp" android:right="3dp" android:top="3dp" android:left="3dp"/>
             <stroke android:width="1dip" android:color="@color/colorWhite" />
             <gradient  android:angle="-90"  android:startColor="@color/colorWhite" android:endColor="@color/colorWhite"  />
@@ -26,7 +26,7 @@
     <item android:state_focused="true"
         android:state_enabled="true">
         <shape android:shape="rectangle"  >
-            <corners android:radius="2dp"/>
+            <corners android:radius="0dp"/>
             <padding android:bottom="3dp" android:right="3dp" android:top="3dp" android:left="3dp"/>
             <stroke android:width="1dip" android:color="@color/colorWhite" />
             <gradient  android:angle="-90"  android:startColor="@color/colorWhite" android:endColor="@color/colorWhite"  />
@@ -37,7 +37,7 @@
     <item
         android:state_enabled="true">
         <shape android:shape="rectangle"  >
-            <corners android:radius="2dp"/>
+            <corners android:radius="0dp"/>
             <padding android:bottom="3dp" android:right="3dp" android:top="3dp" android:left="3dp"/>
             <stroke android:width="1dip" android:color="@color/colorWhite" />
             <gradient  android:angle="-90"  android:startColor="@color/colorWhite" android:endColor="@color/colorWhite"  />

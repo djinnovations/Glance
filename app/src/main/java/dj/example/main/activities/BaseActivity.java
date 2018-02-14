@@ -1,11 +1,15 @@
 package dj.example.main.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
 import com.androidquery.util.AQUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,6 +23,8 @@ import java.util.Map;
 import dj.example.main.R;
 import dj.example.main.model.NavigationDataObject;
 import dj.example.main.uiutils.ColoredSnackbar;
+import dj.example.main.uiutils.DisplayProperties;
+import dj.example.main.uiutils.ViewConstructor;
 import dj.example.main.uiutils.WindowUtils;
 import dj.example.main.utils.IDUtils;
 
@@ -30,28 +36,14 @@ public abstract class BaseActivity extends AppCoreActivity {
 
     private String TAG = "BaseActivity";
 
-    public final int SOCIAL_LOGIN_CALL = IDUtils.generateViewId();
-    public void queryForSocialLogin(JSONObject inputParams){
-        startProgress();
-        AjaxCallback ajaxCallback = getAjaxCallback(SOCIAL_LOGIN_CALL);
-        ajaxCallback.method(AQuery.METHOD_POST);
-        ajaxCallback.header("content-type", "application/json");
-        String url = /*URLHelper.getInstance().getSocialLoginAPI()*/ " "; //// TODO: 08-07-2017  add social login actual API
-        Log.d(TAG, "POST url- queryForSocialLogin()" + TAG + ": " + url);
-        Map<String,Object> params = null;
-        try {
-            params = new ObjectMapper().readValue(inputParams.toString(), HashMap.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (params == null){
-            ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), "Sign in Failed", Snackbar.LENGTH_SHORT)).show();
-            return;
-        }
-        Log.d(TAG, "POST reqParams- queryForSocialLogin()" + TAG + ": " + params);
-        getAQuery().ajax(url, params, String.class, ajaxCallback);
-    }
+    protected DisplayProperties displayProperties;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        int orient = this.getResources().getConfiguration().orientation;
+        displayProperties = DisplayProperties.getInstance(orient);
+    }
 
     public void setErrMsg(String msg){
         ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
@@ -82,6 +74,35 @@ public abstract class BaseActivity extends AppCoreActivity {
         ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
     }
 
+    public void showDialogInfo(String msg, boolean isPositive) {
+        int color;
+        color = isPositive ? R.color.colorPrimary : R.color.redStatus;
+        WindowUtils.getInstance().genericInfoMsgWithOK(this, null, msg, color);
+    }
+
+
+    public final int SOCIAL_LOGIN_CALL = IDUtils.generateViewId();
+    public void queryForSocialLogin(JSONObject inputParams){
+        startProgress();
+        AjaxCallback ajaxCallback = getAjaxCallback(SOCIAL_LOGIN_CALL);
+        ajaxCallback.method(AQuery.METHOD_POST);
+        ajaxCallback.header("content-type", "application/json");
+        String url = /*URLHelper.getInstance().getSocialLoginAPI()*/ " "; //// TODO: 08-07-2017  add social login actual API
+        Log.d(TAG, "POST url- queryForSocialLogin()" + TAG + ": " + url);
+        Map<String,Object> params = null;
+        try {
+            params = new ObjectMapper().readValue(inputParams.toString(), HashMap.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (params == null){
+            ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), "Sign in Failed", Snackbar.LENGTH_SHORT)).show();
+            return;
+        }
+        Log.d(TAG, "POST reqParams- queryForSocialLogin()" + TAG + ": " + params);
+        getAQuery().ajax(url, params, String.class, ajaxCallback);
+    }
+
     public final int NORMAL_LOGIN_CALL = IDUtils.generateViewId();
     public void queryForLogin(String userId, String password) {
         startProgress();
@@ -97,6 +118,7 @@ public abstract class BaseActivity extends AppCoreActivity {
         getAQuery().ajax(url, params, String.class, ajaxCallback);
     }
 
+    protected boolean isClearTask;
 
     public boolean action(NavigationDataObject navigationDataObject) {
         int actionType = navigationDataObject.getTargetType();
@@ -107,11 +129,28 @@ public abstract class BaseActivity extends AppCoreActivity {
             if (target != null) {
                 intent = new Intent(this, target);
                 //add flags if any
+
+                startActivity(intent);
             }
         }else if (actionType == NavigationDataObject.WEB_ACTIVITY){
-            
+
         }else if (actionType == NavigationDataObject.LOGOUT){
-            //// TODO: 08-07-2017  perform logout 
+            //// TODO: 08-07-2017  perform logout
+            Class target = navigationDataObject.getTargetClass();
+            if (target != null) {
+                intent = new Intent(this, target);
+                //intent.putExtra("lycavidurl", url);
+                if (isClearTask)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                else intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                MyApplication.getInstance().getUiHandler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getSelf().finish();
+                    }
+                }, 500);
+            }
         }else if (actionType == NavigationDataObject.SHARE){
             //// TODO: 08-07-2017  any share actions here 
         }else if (actionType == NavigationDataObject.RATE_US){
@@ -120,12 +159,34 @@ public abstract class BaseActivity extends AppCoreActivity {
         return true;
     }
 
-    public void showDialogInfo(String msg, boolean isPositive) {
-        int color;
-        color = isPositive ? R.color.colorPrimary : R.color.redStatus;
-        WindowUtils.getInstance().genericInfoMsgWithOK(this, null, msg, color);
+    @Override
+    public void serverCallEnds(int id, String url, Object json, AjaxStatus status) {
+        Log.d(TAG, "url queried-" + TAG + ": " + url);
+        Log.d(TAG, "response-" + TAG + ": " + json);
+
     }
 
+
+    Dialog alertDialogForgotPassword;
+
+    public void performForgotPassword(){
+        alertDialogForgotPassword = null;
+        WindowUtils.getInstance().invokeForgotPasswordDialog(this, new ViewConstructor.InfoDisplayListener() {
+            @Override
+            public void onNegativeSelection(Dialog alertDialog) {
+
+            }
+
+            @Override
+            public void onPositiveSelection(Dialog alertDialog) {
+                alertDialogForgotPassword = alertDialog;
+                String txt = (String) ((AlertDialog) alertDialog)
+                        .getButton(AlertDialog.BUTTON_POSITIVE).getTag();
+                //queryForRenewSubs(txt);
+                //performChangeFromLogOffToCurrent(StaticTopBarFragment.MENU_SEARCH);
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {

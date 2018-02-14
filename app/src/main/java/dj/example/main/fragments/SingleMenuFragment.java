@@ -22,16 +22,25 @@ import dj.example.main.uiutils.UiRandomUtils;
  * Created by DJphy on 20-12-2016.
  */
 
-public abstract class SingleMenuFragment extends Fragment {
+public abstract class SingleMenuFragment extends PrimaryBaseFragment {
 
-    @Nullable
+   /* @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_menu_single, container, false);
+    }*/
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_menu_single;
+    }
+
+    @Override
+    protected String getFragmentTitle() {
+        return "";
     }
 
     public abstract boolean isAddSnapper();
-
 
     @BindView(R.id.llBody)
     LinearLayout llBody;
@@ -54,9 +63,10 @@ public abstract class SingleMenuFragment extends Fragment {
         if (isAddSnapper())
             UiRandomUtils.getInstance().addSnapper(rvMenu, Gravity.START);
         //mTitlesAdapter = new TitlesAdapter(mainMenuSelectionListener);
-        if (getAdapter() == null)
+        RecyclerView.Adapter adapter = getAdapter();
+        if (adapter == null)
             return;
-        rvMenu.setAdapter(getAdapter());
+        rvMenu.setAdapter(adapter);
     }
 
     protected void setBodySettings(LinearLayout bodyLayout){
@@ -69,11 +79,4 @@ public abstract class SingleMenuFragment extends Fragment {
 
     public abstract void changeData(List dataList);
 
-    protected abstract void onGarbageCollection();
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        onGarbageCollection();
-    }
 }

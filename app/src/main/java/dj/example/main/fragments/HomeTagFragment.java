@@ -33,7 +33,7 @@ import dj.example.main.activities.TabsBaseActivity;
 import dj.example.main.redundant.BaseFragment;
 import dj.example.main.uiutils.DisplayProperties;
 
-public class HomePage extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class HomeTagFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
     @BindView(R.id.disableApp)
     View disableApp;
@@ -238,7 +238,7 @@ public class HomePage extends BaseFragment implements ViewPager.OnPageChangeList
 
         public TabIndicatorRecyclerViewAdapter(ViewPager viewPager) {
             super(viewPager);
-            //HomePage.viewPager = viewPager;
+            //HomeTagFragment.viewPager = viewPager;
             dataList.clear();
             for (Pair<Class, String> pair: primaryTabFragments) {
                 dataList.add(pair.second);

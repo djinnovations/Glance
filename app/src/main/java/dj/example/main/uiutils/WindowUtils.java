@@ -1,15 +1,20 @@
 package dj.example.main.uiutils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import dj.example.main.R;
 import dj.example.main.activities.MyApplication;
 
 
@@ -73,6 +78,47 @@ public class WindowUtils {
     public void genericInfoMsgWithCallBack(Activity activity, String title, String infoMsg, int colorInfoMsg, String posBtnTxt,
                                            final ViewConstructor.InfoDisplayListener mInfoListener) {
         mViewConstructor.displayInfo(activity, title, infoMsg, posBtnTxt, colorInfoMsg, true, mInfoListener);
+    }
+
+
+    public void invokeForgotPasswordDialog(Activity activity, final ViewConstructor.InfoDisplayListener mInfoListener) {
+        final android.support.v7.app.AlertDialog dialog = mViewConstructor.displayViewInfo(activity, "Forgot your password",
+                R.layout.layout_edittext, "Send", true, mInfoListener);
+        final EditText editText = (EditText) dialog.findViewById(R.id.etItem);
+        final TextView textView = (TextView) dialog.findViewById(R.id.tvItem);
+        editText.setHint("Email ID to receive a password");
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String data = "";
+                if (editText != null)
+                    data = editText.getText().toString().trim();
+                if (isValidEmail(data)) {
+                    if (textView != null)
+                        textView.setVisibility(View.GONE);
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTag(data);
+                    mInfoListener.onPositiveSelection(dialog);
+                } else {
+                    if (textView != null) {
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText("enter a valid email address");
+                        textView.setTextColor(ResourceReader.getInstance().getColorFromResource(R.color.redStatus));
+                    }
+                }
+            }
+        });
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                mInfoListener.onNegativeSelection(dialog);
+            }
+        });
+    }
+
+
+    boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
 

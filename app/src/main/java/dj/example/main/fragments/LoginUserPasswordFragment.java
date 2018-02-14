@@ -3,17 +3,16 @@ package dj.example.main.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dj.example.main.R;
+import dj.example.main.activities.BaseActivity;
+import dj.example.main.activities.MyApplication;
 import dj.example.main.uiutils.ColoredSnackbar;
 
 /**
@@ -38,6 +37,13 @@ public class LoginUserPasswordFragment extends PrimaryBaseFragment {
                 ColoredSnackbar.alert(Snackbar.make(btnLoginAcct, "Fill all fields", Snackbar.LENGTH_SHORT)).show();
             }
         });
+
+        Runnable runnable = new Runnable() {
+            public void run() {
+                etUserName.requestFocus();
+            }
+        };
+        MyApplication.getInstance().getUiHandler().postDelayed(runnable, 300);
     }
 
     @Override
@@ -61,6 +67,12 @@ public class LoginUserPasswordFragment extends PrimaryBaseFragment {
     EditText etPassword;
     @BindView(R.id.btnLoginAcct)
     Button btnLoginAcct;
+
+    @OnClick(R.id.forgotPasswordButton)
+    void onPlayClicked() {
+        if (getActivity() instanceof BaseActivity)
+            ((BaseActivity) getActivity()).performForgotPassword();
+    }
 
 
     private boolean canContinue(){

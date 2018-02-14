@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidquery.callback.AjaxStatus;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dj.example.main.R;
 import dj.example.main.model.NavigationDataObject;
+import dj.example.main.uiutils.DisplayProperties;
 
 /**
  * Created by DJphy
@@ -36,6 +38,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     NavigationView vNavigation;
     Toolbar toolbar;
 
+    protected DisplayProperties displayProperties;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -43,14 +46,16 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.flContentRoot);
         LayoutInflater.from(this).inflate(layoutResID, viewGroup, true);
         ButterKnife.bind(this);
+        int orient = this.getResources().getConfiguration().orientation;
+        displayProperties = DisplayProperties.getInstance(orient);
         setupToolbar();
         bindViews();
         setupHeader();
     }
 
-    @OnClick({R.id.nav_menu_1,
-            R.id.nav_menu_2, R.id.nav_menu_3,
-            R.id.nav_menu_4})
+    @OnClick({R.id.nav_menu_home,
+            R.id.nav_menu_fav, R.id.nav_menu_profile,
+            R.id.nav_menu_settings, R.id.nav_menu_about, R.id.nav_menu_logout})
     public void menuButtonClick(View view) {
         int id = view.getId();
         menuAction(id);

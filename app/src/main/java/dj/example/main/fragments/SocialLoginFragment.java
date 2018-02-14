@@ -1,20 +1,18 @@
 package dj.example.main.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dj.example.main.R;
+import dj.example.main.activities.NormalLoginActivity;
 import dj.example.main.uiutils.UiRandomUtils;
 
 /**
@@ -62,5 +60,7 @@ public class SocialLoginFragment extends PrimaryBaseFragment {
     @OnClick(R.id.tvAcctLogin)
     void launchNormalLoginScreen(){
         //RandomUtils.getInstance().launchNormalSignIn(getActivity());
+        Intent intent = new Intent(getActivity(), NormalLoginActivity.class);
+        startActivity(intent);
     }
 }

@@ -144,7 +144,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
         MyApplication.getInstance().getUiHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mGoogleApiClient.connect();
+                mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
             }
         }, 200);
 
