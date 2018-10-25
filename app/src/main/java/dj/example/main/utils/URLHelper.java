@@ -5,8 +5,7 @@ package dj.example.main.utils;
  */
 public class URLHelper {
 
-    public static final String END_POINT = "https://api.nasa.gov/";
-    public static final String API_KEY_NASA = "vtRoSiuO7Ze134C859OhPy8AqLOXxIvDmNfVmHOU";
+    public static final String END_POINT = "https://abcdef.com/";
 
 
     private static URLHelper ourInstance;
@@ -22,7 +21,7 @@ public class URLHelper {
 
     }
 
-    public void clearInstance(){
+    public static void clearInstance(){
         ourInstance = null;
     }
 

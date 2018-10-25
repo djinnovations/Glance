@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.google.android.gms.common.SignInButton;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 
 /**
  * Created by DJphy on 18-12-2016.
@@ -26,6 +26,10 @@ public class UiRandomUtils {
         if (ourInstance == null)
             ourInstance = new UiRandomUtils();
         return ourInstance;
+    }
+
+    public static void clearInstance(){
+        ourInstance = null;
     }
 
     public void startAnim(View view, int animResID){

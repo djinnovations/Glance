@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/llBackRoot"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/ivPrimaryBack"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="0dp"
+        android:padding="0dp"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/tvItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingEnd="20dp"
+        android:paddingStart="4dp"
+        android:text="Back"
+        android:textColor="@color/colorAlternateWhite"
+        android:textSize="18sp"
+        android:visibility="visible" />
+
+</LinearLayout>

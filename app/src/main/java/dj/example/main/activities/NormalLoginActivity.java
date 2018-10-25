@@ -2,6 +2,8 @@ package dj.example.main.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -51,7 +53,7 @@ public class NormalLoginActivity extends BaseActivity {
                         loginFragment = new LoginUserPasswordFragment()).commit();
             }
         };
-        MyApplication.getInstance().getUiHandler().postDelayed(runnable, 200);
+        new Handler(Looper.getMainLooper()).postDelayed(runnable, 200);
     }
 
     @Override

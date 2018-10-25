@@ -3,9 +3,14 @@ package dj.example.main.activities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -45,8 +50,22 @@ public abstract class BaseActivity extends AppCoreActivity {
         displayProperties = DisplayProperties.getInstance(orient);
     }
 
+    public void setErrMsgWithOk(String msg, String btnTxt){
+        final Snackbar snackbar = Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(btnTxt, new View.OnClickListener() {
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        ColoredSnackbar.info(snackbar).show();
+    }
+
     public void setErrMsg(String msg){
         ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
+    }
+
+    public void setErrMsgIndefinite(String msg){
+        ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_INDEFINITE)).show();
     }
 
     public void setErrMsg(String msg, boolean lengthLong) {
@@ -72,6 +91,28 @@ public abstract class BaseActivity extends AppCoreActivity {
 
     public void setInfoMsg(String msg){
         ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
+    }
+
+    public void setInfoMsg(String msg, int length){
+        ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, length)).show();
+    }
+
+    public void setInfoMsgIndefinite(String msg){
+        ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_INDEFINITE)).show();
+    }
+
+    protected View addBack(ViewGroup root){
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_back, root, false);
+        if (root.findViewById(R.id.ivPrimaryBack) != null)
+            return null;
+        root.addView(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSelf().onBackPressed();
+            }
+        });
+        return view;
     }
 
     public void showDialogInfo(String msg, boolean isPositive) {
@@ -144,7 +185,7 @@ public abstract class BaseActivity extends AppCoreActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 else intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                MyApplication.getInstance().getUiHandler().postDelayed(new Runnable() {
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         getSelf().finish();

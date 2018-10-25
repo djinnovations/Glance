@@ -13,7 +13,7 @@ import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.objects.Update;
 import com.kobakei.ratethisapp.RateThisApp;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.utils.MyPrefManager;
 
 /**

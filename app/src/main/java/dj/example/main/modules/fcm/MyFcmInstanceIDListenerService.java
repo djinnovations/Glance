@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import dj.example.main.utils.UserSession;
 
 public class MyFcmInstanceIDListenerService extends FirebaseInstanceIdService {
  
@@ -20,7 +19,7 @@ public class MyFcmInstanceIDListenerService extends FirebaseInstanceIdService {
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-        UserSession.getInstance().setFcmToken(refreshedToken);
+        //UserSession.getInstance().setFcmToken(refreshedToken);
 
         // TODO: Implement this method to send any registration to your app's servers.
         //sendRefreshTokenToServer(refreshedToken);

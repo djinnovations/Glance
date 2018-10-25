@@ -28,12 +28,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.activities.TabsBaseActivity;
 import dj.example.main.redundant.BaseFragment;
 import dj.example.main.uiutils.DisplayProperties;
 
-public class HomeTagFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class HomeTabFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
     @BindView(R.id.disableApp)
     View disableApp;
@@ -55,6 +55,8 @@ public class HomeTagFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.indicator)
+    TabLayout indicator;
 
     FragmentStatePagerAdapter pagerAdapter;
     ArrayList<Pair<Class, String>> primaryTabFragments = new ArrayList<>();
@@ -69,6 +71,15 @@ public class HomeTagFragment extends BaseFragment implements ViewPager.OnPageCha
         viewPager.setAdapter(pagerAdapter);
         setUpTabLayout(view);
         viewPager.addOnPageChangeListener(this);
+
+        if (getActivity() instanceof TabsBaseActivity){
+            if(((TabsBaseActivity) getActivity()).isDisableTabIndication()){
+                if((((TabsBaseActivity) getActivity()).getPageIndicator() != null)){
+                    ((TabsBaseActivity) getActivity()).getPageIndicator().setVisibility(View.GONE);
+                }
+                indicator.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void setInitials(){
@@ -98,6 +109,7 @@ public class HomeTagFragment extends BaseFragment implements ViewPager.OnPageCha
             }
         }
         if (tabLayout instanceof TabLayout) {
+            tabLayout.setVisibility(View.VISIBLE);
             Runnable runnable = new Runnable() {
                 public void run() {
                     ((TabLayout) tabLayout).setupWithViewPager(viewPager);
@@ -238,7 +250,7 @@ public class HomeTagFragment extends BaseFragment implements ViewPager.OnPageCha
 
         public TabIndicatorRecyclerViewAdapter(ViewPager viewPager) {
             super(viewPager);
-            //HomeTagFragment.viewPager = viewPager;
+            //HomeTabFragment.viewPager = viewPager;
             dataList.clear();
             for (Pair<Class, String> pair: primaryTabFragments) {
                 dataList.add(pair.second);

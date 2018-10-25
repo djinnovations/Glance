@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dj.example.main.R;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.model.CheckboxTitlesData;
 
 /**

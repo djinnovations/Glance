@@ -2,7 +2,7 @@ package dj.example.main.model;
 
 import java.util.Map;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.utils.IDUtils;
 
 /**

@@ -13,6 +13,7 @@ import dj.example.main.fragments.MainFragment;
 import dj.example.main.utils.MyPrefManager;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "MainActivity";
 
     /*@Override
     public ArrayList<Pair<Class, String>> getTabFragmentsList() {
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public View getViewForLayoutAccess() {
-        return null;
+        return activity_main;
     }
 
     @BindView(R.id.activity_main)

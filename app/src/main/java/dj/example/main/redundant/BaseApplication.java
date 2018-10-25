@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.utils.RandomUtils;
 
 public abstract class BaseApplication extends Application implements MyApplication.IFragmentWatcher {

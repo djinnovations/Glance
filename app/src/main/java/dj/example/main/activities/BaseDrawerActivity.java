@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidquery.callback.AjaxStatus;
@@ -23,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dj.example.main.MyApplication;
 import dj.example.main.R;
 import dj.example.main.model.NavigationDataObject;
 import dj.example.main.uiutils.DisplayProperties;

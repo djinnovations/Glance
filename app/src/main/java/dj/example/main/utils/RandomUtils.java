@@ -28,7 +28,7 @@ public class RandomUtils {
 
     }
 
-    public void clearInstance(){
+    public static void clearInstance(){
         ourInstance = null;
     }
 

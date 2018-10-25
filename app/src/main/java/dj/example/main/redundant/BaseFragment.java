@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import dj.example.main.R;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.customviews.DefaultWebView;
 
 public abstract class BaseFragment extends Fragment{

@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.activities.PrimaryMainActivity;
 import dj.example.main.adapters.GenericAdapter;
 import dj.example.main.adapters.ThumbnailAdapter;

@@ -2,8 +2,6 @@ package dj.example.main.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.util.Pair;
@@ -18,11 +16,8 @@ import java.util.List;
 import butterknife.BindView;
 import dj.example.main.R;
 import dj.example.main.model.NavigationDataObject;
-import dj.example.main.modules.appupdater.MyAppRaterUpdateHelper;
 import dj.example.main.modules.sociallogins.SocialLoginUtil;
 import dj.example.main.redundant.BaseFragment;
-import dj.example.main.uiutils.ColoredSnackbar;
-import dj.example.main.utils.MyPrefManager;
 
 /**
  * Created by DJphy on 10-07-2017.
@@ -89,6 +84,8 @@ public abstract class TabsBaseActivity extends BaseDrawerActivity {
 
     protected abstract NavigationDataObject getPrimaryNavigationObj();
 
+    public abstract boolean isDisableTabIndication();
+
     /*private AppTourGuideHelper mTourHelper;
 
     private void tourThisScreen() {
@@ -132,8 +129,6 @@ public abstract class TabsBaseActivity extends BaseDrawerActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    private final String TAG = "MainActivity";
 
     private final String TAG_FOR_HOME_FRAGMENT = "finder.homefragment";
 

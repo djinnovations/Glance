@@ -53,6 +53,10 @@ public class ViewConstructor {
         return thisInstance;
     }
 
+    public static void clearInstance(){
+        thisInstance = null;
+    }
+
 
     public AlertDialog displayInfo(Activity activity, String title, String infoMsg, String positiveText
             , int infoMsgColor, boolean cancelable, final InfoDisplayListener mInfoListener) {

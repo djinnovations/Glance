@@ -1,11 +1,13 @@
 package dj.example.main.uiutils;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
+
 
 public class DisplayProperties {
 
@@ -36,8 +38,8 @@ public class DisplayProperties {
     public float XTRA_LARGE_FONT;
     public float HUGE_FONT;
 
-    public static int ORIENTATION_LANDSCAPE = 0;
-    public static int ORIENTATION_PORTRAIT = 1;
+    public static int ORIENTATION_LANDSCAPE = Configuration.ORIENTATION_LANDSCAPE;
+    public static int ORIENTATION_PORTRAIT = Configuration.ORIENTATION_PORTRAIT;
 
     private static int mScreenOrientation;
 
@@ -58,9 +60,6 @@ public class DisplayProperties {
 
     public static DisplayProperties getInstance(/*Context context,*/ int screenOrientation) {
         try {
-            //DisplayProperties.mContext = context;
-            //DisplayProperties.orientation = screenOrientation;
-            /**Creating an instance of Database helper class to fetch necessary data */
             if (mDispPropInstance == null) {
                 mDispPropInstance = new DisplayProperties(screenOrientation);
             }
@@ -70,7 +69,7 @@ public class DisplayProperties {
             }
             return mDispPropInstance;
         } catch (Exception ex) {
-            Log.d(TAG, "Error in getting message. Details: \n" + ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }
@@ -95,7 +94,7 @@ public class DisplayProperties {
             pixels_per_cell_X = (metrics.widthPixels) / (gridX);
             pixels_per_cell_Y = (metrics.heightPixels) / (gridY);
 
-        } else if (/*DisplayProperties.*/orientation == ORIENTATION_PORTRAIT) {// 1==portrait ; 0 == landscape
+        } else if (/*DisplayProperties.*/orientation == ORIENTATION_PORTRAIT) {
             pixels_per_cell_X = (metrics.widthPixels) / (gridY);
             pixels_per_cell_Y = (metrics.heightPixels) / (gridX);
         }
@@ -103,13 +102,13 @@ public class DisplayProperties {
 
 
     public float getXPixelsPerCell() {
-        Log.d("dj", "pixels x: " + pixels_per_cell_X);
+        //Log.d("dj", "pixels x: " + pixels_per_cell_X);
         return pixels_per_cell_X;
     }
 
 
     public float getYPixelsPerCell() {
-        Log.d("dj", "pixels y: " + pixels_per_cell_Y);
+        //Log.d("dj", "pixels y: " + pixels_per_cell_Y);
         return pixels_per_cell_Y;
     }
 

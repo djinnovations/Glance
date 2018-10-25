@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.androidquery.AQuery;
@@ -16,8 +19,8 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
 import dj.example.main.R;
+import dj.example.main.customviews.FloatOverlayView;
 import dj.example.main.modules.appupdater.MyAppRaterUpdateHelper;
-import dj.example.main.modules.sociallogins.SocialLoginUtil;
 import dj.example.main.uiutils.ColoredSnackbar;
 import dj.example.main.uiutils.WindowUtils;
 
@@ -42,10 +45,11 @@ public abstract class AppCoreActivity extends AppCompatActivity {
                 AppCoreActivity.this.progressBar = getProgressBar();
                 if (progressBar != null)
                     progressBar.setVisibility(View.VISIBLE);
-                displayTransOverlay(false);
+                //displayTransOverlay(false);
+                displayFloatingOverlay();
             }
         };
-        MyApplication.getInstance().getUiHandler().post(runnable);
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 
     protected void stopProgress() {
@@ -53,10 +57,11 @@ public abstract class AppCoreActivity extends AppCompatActivity {
             public void run() {
                 if (progressBar != null)
                     progressBar.setVisibility(View.GONE);
-                dismissTransOverlay();
+                //dismissTransOverlay();
+                removeFloatingOverlay();
             }
         };
-        MyApplication.getInstance().getUiHandler().post(runnable);
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 
 
@@ -99,6 +104,7 @@ public abstract class AppCoreActivity extends AppCompatActivity {
 
     protected Dialog transDialog;
 
+    @Deprecated
     protected void displayTransOverlay(final boolean isShowProgressBar) {
         Runnable runnable = new Runnable() {
             public void run() {
@@ -111,9 +117,10 @@ public abstract class AppCoreActivity extends AppCompatActivity {
                 else view.findViewById(R.id.progressBar).setVisibility(View.GONE);
             }
         };
-        MyApplication.getInstance().getUiHandler().post(runnable);
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 
+    @Deprecated
     protected void dismissTransOverlay() {
         Runnable runnable = new Runnable() {
             public void run() {
@@ -121,7 +128,54 @@ public abstract class AppCoreActivity extends AppCompatActivity {
                     transDialog.dismiss();
             }
         };
-        MyApplication.getInstance().getUiHandler().post(runnable);
+        new Handler(Looper.getMainLooper()).post(runnable);
+    }
+
+    protected FloatOverlayView overlayView;
+
+    protected void displayFloatingOverlay(){
+        synchronized (this) {
+            /*if (overlayView != null)
+                return;
+            if (transDialog != null) {
+                if (transDialog.isShowing())
+                    return;
+            }*/
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    if (overlayView == null) {
+                        overlayView = new FloatOverlayView(AppCoreActivity.this);
+                        addContentView(overlayView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                                , ViewGroup.LayoutParams.MATCH_PARENT));
+                        overlayView.bringToFront();
+                        overlayView.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                return true;
+                            }
+                        });
+                        overlayView.invalidate();
+                    }
+                }
+            };
+            new Handler(Looper.getMainLooper()).post(runnable);
+        }
+    }
+
+    protected void removeFloatingOverlay(){
+        synchronized (this) {
+            if (overlayView == null)
+                return;
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    if (overlayView != null) {
+                        ((ViewGroup) overlayView.getParent()).removeView(overlayView);
+                        overlayView = null;
+                    }
+                }
+            };
+            new Handler(Looper.getMainLooper()).post(runnable);
+        }
     }
 
     protected void promptBeforeExit(){

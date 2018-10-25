@@ -19,7 +19,7 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 
 import dj.example.main.activities.MainActivity;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 
 /**
  * Created by DJphy on 18-10-2016.

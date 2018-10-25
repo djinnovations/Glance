@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import dj.example.main.R;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 
 
 public class WindowUtils {
@@ -38,6 +38,10 @@ public class WindowUtils {
             thisInstance = new WindowUtils(MyApplication.getInstance());
         }
         return thisInstance;
+    }
+
+    public static void clearInstance(){
+        thisInstance = null;
     }
 
     public void genericPermissionInfoDialog(Activity activity, String message) {

@@ -3,6 +3,8 @@ package dj.example.main.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -61,7 +63,7 @@ public class LoginActivity extends BaseActivity{
                         loginFragment = new SocialLoginFragment()).commit();
             }
         };
-        MyApplication.getInstance().getUiHandler().postDelayed(runnable, 200);
+        new Handler(Looper.getMainLooper()).postDelayed(runnable, 200);
     }
 
     public SocialLoginUtil getmSocialLoginInstance() {

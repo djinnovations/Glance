@@ -16,6 +16,8 @@ import java.util.Locale;
  */
 public class DateTimeUtils {
 
+    private static final String TAG = "DateTimeUtils";
+
     public static long getDateInMillis(String dateFromServer) {
         int[] dateInInt = serverToUsableDate(dateFromServer);
         if (dateInInt != null) {
@@ -42,10 +44,10 @@ public class DateTimeUtils {
 
 
     public static String getFormattedTimestamp(String outputFormat, long timestamp){
-        Log.d("dj", "input getFormattedTimestamp: " + outputFormat +" && "+timestamp);
+        Log.d(TAG, "input getFormattedTimestamp: " + outputFormat +" && "+timestamp);
         SimpleDateFormat dateFormat = new SimpleDateFormat(outputFormat, Locale.getDefault());
         Date date = new Date(timestamp);
-        Log.d("dj", "datetime: getFormattedTimestamp: " + dateFormat.format(date));
+        Log.d(TAG, "datetime: getFormattedTimestamp: " + dateFormat.format(date));
         return dateFormat.format(date);
     }
 

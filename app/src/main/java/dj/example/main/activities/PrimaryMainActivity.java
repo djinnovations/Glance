@@ -1,6 +1,5 @@
 package dj.example.main.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.Menu;
@@ -11,11 +10,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import dj.example.main.MyApplication;
 import dj.example.main.R;
 import dj.example.main.fragments.MainFragment;
 import dj.example.main.model.HeaderThumbnailData;
 import dj.example.main.model.NavigationDataObject;
-import dj.example.main.utils.IntentKeys;
 import dj.example.main.utils.MyPrefManager;
 
 /**
@@ -66,8 +65,13 @@ public class PrimaryMainActivity extends TabsBaseActivity {
         return MyApplication.getInstance().getNavigationObj(R.id.nav_menu_home);
     }
 
+    @Override
+    public boolean isDisableTabIndication() {
+        return true;
+    }
 
-    public void launchDetailsActivity(HeaderThumbnailData.ThumbnailData data){
+
+    public void launchDetailsActivity(HeaderThumbnailData.ThumbnailData data) {
         /*Intent intent = new Intent(this, VideoDetailsActivity.class);
         DetailsData data1 = new DetailsData(data.getId(), data.getExtraData(),
                 data.getThumbnailUrl(), data.getTitle(), "");

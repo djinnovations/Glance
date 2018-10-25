@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import dj.example.main.R;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.utils.DateTimeUtils;
 import dj.example.main.utils.IntentKeys;
 import dj.example.main.utils.MyPrefManager;

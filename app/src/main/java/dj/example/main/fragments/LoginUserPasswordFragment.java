@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dj.example.main.R;
 import dj.example.main.activities.BaseActivity;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.uiutils.ColoredSnackbar;
 
 /**

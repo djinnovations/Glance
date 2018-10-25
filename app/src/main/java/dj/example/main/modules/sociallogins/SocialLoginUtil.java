@@ -51,13 +51,12 @@ import java.util.Arrays;
 
 import dj.example.main.R;
 import dj.example.main.activities.BaseActivity;
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 import dj.example.main.model.LoginInputParams;
 import dj.example.main.model.UserInfo;
 import dj.example.main.uiutils.ResourceReader;
 import dj.example.main.utils.MyPrefManager;
 import dj.example.main.utils.RandomUtils;
-import dj.example.main.utils.UserSession;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -468,7 +467,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
             userInfo.name = params.getName();
             userInfo.profileImgUrl = params.getImage();
             userInfo.uniqueId = params.getUid();
-            UserSession.getInstance().setUserInfo(userInfo);
+            MyApplication.getInstance().setUserInfo(userInfo);
 
             checkLoginStatAndProceed(params);
         } catch (Exception e) {
@@ -487,7 +486,7 @@ public class SocialLoginUtil implements GoogleApiClient.ConnectionCallbacks,
             userInfo.gender = params.getGender();
             userInfo.location = params.getLocation();
             userInfo.birthday = params.getBirthday();
-            UserSession.getInstance().setUserInfo(userInfo);
+            MyApplication.getInstance().setUserInfo(userInfo);
 
             if (MyPrefManager.getInstance().getLoginStatus()){
                 RandomUtils.getInstance().launchHome(mActivity, true);

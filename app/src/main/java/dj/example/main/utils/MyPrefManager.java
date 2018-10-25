@@ -3,7 +3,7 @@ package dj.example.main.utils;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 
 /**
  * Created by DJphy on 08-07-2017.
@@ -55,6 +55,10 @@ public class MyPrefManager {
             mPrefManager = new MyPrefManager();
         }
         return mPrefManager;
+    }
+
+    public static void clearInstance(){
+        mPrefManager = null;
     }
 
     public boolean getLoginStatus(){

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-import dj.example.main.activities.MyApplication;
+import dj.example.main.MyApplication;
 
 
 /**
@@ -25,6 +25,10 @@ public class ResourceReader {
             ourInstance = new ResourceReader(MyApplication.getInstance());
         }
         return ourInstance;
+    }
+
+    public static void clearInstance(){
+        ourInstance = null;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
