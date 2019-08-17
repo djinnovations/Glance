@@ -10,7 +10,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-    <dj.example.main.customviews.CircularImageView
+    <co.djphy.glance.customviews.CircularImageView
         android:id="@+id/userImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
