@@ -19,4 +19,11 @@
     <string name="material">Material:</string>
     <string name="status">Status:</string>
     <string name="time">Time:</string>
+
+
+    <!--Glance addition-->
+    <string name="signUp">Dont have an account? Sign Up</string>
+    <string name="authname">Authority Name</string>
+
+
 </resources>

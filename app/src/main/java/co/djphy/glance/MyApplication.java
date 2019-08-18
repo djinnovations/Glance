@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
+
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,6 +109,10 @@ public class MyApplication extends Application {
                 }
             }
         });
+        // Initialize the SDK
+        Places.initialize(getApplicationContext(), "AIzaSyD7ck6fgxF80yS7a22XH8A--jZl_owIfys");
+        // Create a new Places client instance
+        PlacesClient placesClient = Places.createClient(this);
     }
 
     public void onAppExit(){

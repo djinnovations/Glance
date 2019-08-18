@@ -2,8 +2,8 @@ package co.djphy.glance.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,15 +1,10 @@
 package co.djphy.glance.utils;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.google.gson.Gson;
 
 import co.djphy.glance.uiutils.ColoredSnackbar;
 

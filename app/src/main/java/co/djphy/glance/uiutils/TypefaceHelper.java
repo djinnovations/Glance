@@ -2,7 +2,7 @@ package co.djphy.glance.uiutils;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.design.widget.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;

@@ -1,7 +1,7 @@
 package co.djphy.glance.modules.fcm;
 
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -10,6 +10,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
+import co.djphy.glance.MyApplication;
 import co.djphy.glance.activities.MainActivity;
 import co.djphy.glance.utils.DateTimeUtils;
 
@@ -18,6 +19,10 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     private static final String TAG = "MyFcmListenerService";
     private NotificationUtils notificationUtils;
 
+    @Override
+    public void onNewToken(String token){
+        //send token to server
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage messageMain) {
@@ -50,13 +55,13 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         Log.i(TAG, "ctaData: " + deepLinkData);
         Log.i(TAG, "timestamp: " + timestamp);
 
-        if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
+        if (!NotificationUtils.isAppIsInBackground(MyApplication.getInstance())) {
 
             // app is in foreground, broadcast the push message
             Log.e(TAG, "App is in foreground");
             Intent pushNotification = new Intent(FCMConstants.PUSH_NOTIFICATION);
             pushNotification.putExtra("message", message);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+            LocalBroadcastManager.getInstance(MyApplication.getInstance()).sendBroadcast(pushNotification);
 
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils();
@@ -64,7 +69,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         } else {
 
             Log.e(TAG, "App is in background");
-            Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent resultIntent = new Intent(MyApplication.getInstance(), MainActivity.class);
             resultIntent.putExtra("message", message);
 
             if (TextUtils.isEmpty(bannerImgUrl)) {

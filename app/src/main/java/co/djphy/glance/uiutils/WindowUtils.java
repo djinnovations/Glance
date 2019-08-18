@@ -86,7 +86,7 @@ public class WindowUtils {
 
 
     public void invokeForgotPasswordDialog(Activity activity, final ViewConstructor.InfoDisplayListener mInfoListener) {
-        final android.support.v7.app.AlertDialog dialog = mViewConstructor.displayViewInfo(activity, "Forgot your password",
+        final androidx.appcompat.app.AlertDialog dialog = mViewConstructor.displayViewInfo(activity, "Forgot your password",
                 R.layout.layout_edittext, "Send", true, mInfoListener);
         final EditText editText = (EditText) dialog.findViewById(R.id.etItem);
         final TextView textView = (TextView) dialog.findViewById(R.id.tvItem);

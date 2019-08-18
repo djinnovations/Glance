@@ -2,8 +2,11 @@ package co.djphy.glance.uiutils;
 
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -60,4 +63,12 @@ public class UiRandomUtils {
             }
         }
     }
+
+    public void boldSomeTxt(@NonNull TextView textView, int start, int end) {
+        SpannableStringBuilder str = new SpannableStringBuilder(textView.getText().toString());
+        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(str);
+    }
+
 }

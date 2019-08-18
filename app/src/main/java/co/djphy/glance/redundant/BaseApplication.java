@@ -2,7 +2,7 @@ package co.djphy.glance.redundant;
 
 import android.app.Application;
 import android.provider.Settings;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 

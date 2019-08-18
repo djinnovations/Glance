@@ -3,9 +3,9 @@ package co.djphy.glance.modules.fcm;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
-public class MyFcmInstanceIDListenerService extends FirebaseInstanceIdService {
+public class MyFcmInstanceIDListenerService extends FirebaseMessagingService {
  
     private static final String TAG = "IDListenerService";
  
@@ -15,7 +15,7 @@ public class MyFcmInstanceIDListenerService extends FirebaseInstanceIdService {
      * InstanceID provider.
      */
     @Override
-    public void onTokenRefresh() {
+    public void onNewToken(String token) {
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
