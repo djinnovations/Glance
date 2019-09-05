@@ -12,9 +12,16 @@ import java.util.List;
 public class HeaderThumbnailData implements Parcelable{
 
     private String headerTitle;
-    private List<ThumbnailData> dataList;
+    //private List<HorizontalViewData> dataList;
+    private List<Object> dataList;
+    private int viewType;
 
-    public HeaderThumbnailData(String headerTitle, List<ThumbnailData> dataList) {
+    public int getViewType() {
+        return viewType;
+    }
+
+    public HeaderThumbnailData(int viewType, String headerTitle, List<Object> dataList) {
+        this.viewType = viewType;
         this.headerTitle = headerTitle;
         this.dataList = dataList;
     }
@@ -23,13 +30,14 @@ public class HeaderThumbnailData implements Parcelable{
         return headerTitle;
     }
 
-    public List<ThumbnailData> getDataList() {
+    public List<Object> getDataList() {
         return dataList;
     }
 
     protected HeaderThumbnailData(Parcel in){
         headerTitle = in.readString();
-        dataList = in.readArrayList(ThumbnailData.class.getClassLoader());
+        viewType = in.readInt();
+        dataList = in.readArrayList(Object.class.getClassLoader());
     }
 
     @Override
@@ -41,6 +49,7 @@ public class HeaderThumbnailData implements Parcelable{
     public void writeToParcel(Parcel dest, int i) {
         dest.writeString(headerTitle);
         dest.writeList(dataList);
+        dest.writeInt(viewType);
     }
 
     @SuppressWarnings("unused")
@@ -58,7 +67,7 @@ public class HeaderThumbnailData implements Parcelable{
 
 
 
-    public static class ThumbnailData implements Parcelable {
+    public static class HorizontalViewData implements Parcelable {
 
         private int viewType;
         private String id;
@@ -70,7 +79,8 @@ public class HeaderThumbnailData implements Parcelable{
         private String title1;
 
 
-        public ThumbnailData(int viewType, String id, String thumbnailUrl, String extraData, String type, String title) {
+        public HorizontalViewData(int viewType, String id, String thumbnailUrl,
+                                  String extraData, String type, String title) {
             this.viewType = viewType;
             this.id = id;
             this.thumbnailUrl = thumbnailUrl;
@@ -139,7 +149,7 @@ public class HeaderThumbnailData implements Parcelable{
             this.title1 = title1;
         }
 
-        protected ThumbnailData(Parcel in) {
+        protected HorizontalViewData(Parcel in) {
             id = in.readString();
             thumbnailUrl = in.readString();
             extraData = in.readString();
@@ -166,15 +176,15 @@ public class HeaderThumbnailData implements Parcelable{
         }
 
         @SuppressWarnings("unused")
-        public static final Creator<ThumbnailData> CREATOR = new Creator<ThumbnailData>() {
+        public static final Creator<HorizontalViewData> CREATOR = new Creator<HorizontalViewData>() {
             @Override
-            public ThumbnailData createFromParcel(Parcel in) {
-                return new ThumbnailData(in);
+            public HorizontalViewData createFromParcel(Parcel in) {
+                return new HorizontalViewData(in);
             }
 
             @Override
-            public ThumbnailData[] newArray(int size) {
-                return new ThumbnailData[size];
+            public HorizontalViewData[] newArray(int size) {
+                return new HorizontalViewData[size];
             }
         };
     }

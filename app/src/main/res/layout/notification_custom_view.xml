@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/header"
-        android:background="@drawable/shadow_down" />
+        android:background="@drawable/shadow_bottom" />
 
     <ImageView
         android:id="@+id/big_picture"

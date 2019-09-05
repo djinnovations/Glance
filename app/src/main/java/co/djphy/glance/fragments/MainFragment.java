@@ -10,12 +10,14 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import co.djphy.glance.MyApplication;
 import co.djphy.glance.activities.PrimaryMainActivity;
-import co.djphy.glance.adapters.GenericAdapter;
-import co.djphy.glance.adapters.ThumbnailAdapter;
+import co.djphy.glance.adapters.VerticalGenericAdapter;
+import co.djphy.glance.adapters.HorizontalGenericAdapter;
 import co.djphy.glance.model.HeaderThumbnailData;
+import co.djphy.glance.model.ServicePackageDetails;
 
 /**
  * Created by User on 03-02-2018.
@@ -23,7 +25,7 @@ import co.djphy.glance.model.HeaderThumbnailData;
 
 public class MainFragment extends SingleMenuFragment {
 
-    private GenericAdapter adapter;
+    private VerticalGenericAdapter adapter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -39,37 +41,99 @@ public class MainFragment extends SingleMenuFragment {
     private void setDummy(){
         Runnable runnable = new Runnable() {
             public void run() {
-                int imax = 1, jmax = 1;
+                int imax = 4, jmax = 0;
 
                 if (getActivity() instanceof PrimaryMainActivity){
                     imax = 15;
                     jmax = 10;
                 }
+                List<Object> objectList = createServicePackages();
                 List<HeaderThumbnailData> dataList = new ArrayList<>();
                 for (int i =0; i < imax; i++){
-                    List<HeaderThumbnailData.ThumbnailData> thumbnailDataList = new ArrayList<>();
-                    for (int j = 0; j< jmax; j++){
-                        if (i == 0){
-                            HeaderThumbnailData.ThumbnailData thumbnailData
-                                    = new HeaderThumbnailData.ThumbnailData(ThumbnailAdapter.LANDSCAPE, String.valueOf(j),
-                                    "http://78.media.tumblr.com/5496c974500f1c6c6047e256c34b8a86/tumblr_mz9posw3YS1ra8ht7o1_500.jpg",
-                                    "extra", "0", "item-" + String.valueOf(j));
-                            thumbnailDataList.add(thumbnailData);
-                        }
-                       else {
-                            HeaderThumbnailData.ThumbnailData thumbnailData
-                                    = new HeaderThumbnailData.ThumbnailData(ThumbnailAdapter.PORTRAIT, String.valueOf(j),
-                                    "https://cdn.cinematerial.com/p/297x/zeegh0s4/jumanji-welcome-to-the-jungle-british-movie-poster-md.jpg",
-                                    "extra", "0", "item-" + String.valueOf(j));
-                            thumbnailDataList.add(thumbnailData);
-                        }
+                    List<Object> horizontalViewDataList = new ArrayList<>();
+                    if (i == 0)
+                        dataList.add(new HeaderThumbnailData(VerticalGenericAdapter.CUSTOMIZE_BUTTON,
+                                "header-"+String.valueOf(i), horizontalViewDataList));
+                    else if (i > 0){
+                        dataList.add(new HeaderThumbnailData(VerticalGenericAdapter.HORIZONTAL_VIEW,
+                                "header-"+String.valueOf(i), objectList
+                                .subList(jmax, jmax+2)));
+                        jmax = jmax+2;
                     }
-                    dataList.add(new HeaderThumbnailData("header-"+String.valueOf(i), thumbnailDataList));
                 }
                 changeData(dataList);
             }
         };
         new Thread(runnable).start();
+    }
+
+
+    private List<Object> createServicePackages(){
+        List<Object> packageDetails = new ArrayList<>();
+        TreeMap<String, String> map = new TreeMap<>();
+        map.put("FMSsub01", "Masonry");
+        map.put("FMSsub02", "Carpentry Works");
+        map.put("FMSsub03", "Flooring Works");
+        map.put("FMSsub04", "Fabrication Works");
+        map.put("FMSsub05", "Painting Works");
+        map.put("FMSsub06", "AC Repairs & installation");
+        ServicePackageDetails details = new ServicePackageDetails(HorizontalGenericAdapter.AVAILABLE_PACKAGES
+                ,"packId"+"01", "Facility management services",
+                "dummyurl", map);
+        packageDetails.add(details);
+        TreeMap<String, String> map1 = new TreeMap<>();
+        map1.put("PMsub01", "Power Distribution");
+        map1.put("PMsub02", "Energy Management");
+        map1.put("PMsub03", "Diesel Generators");
+        map1.put("PMsub04", "HVAC Systems");
+        map1.put("PMsub05", "Transformers etc");
+        details = new ServicePackageDetails(HorizontalGenericAdapter.AVAILABLE_PACKAGES
+                ,"packId"+"02", "Power Management",
+                "dummyurl", map1);
+        packageDetails.add(details);
+        TreeMap<String, String> map2 = new TreeMap<>();
+        map2.put("IWsub01", "Woodend Partitions");
+        map2.put("IWsub02", "Kitchen Cabinets");
+        map2.put("IWsub03", "Bedroom cots & study tables");
+        map2.put("IWsub04", "TV cabinets");
+        map2.put("IWsub05", "False ceiling works, etc");
+        details = new ServicePackageDetails(HorizontalGenericAdapter.AVAILABLE_PACKAGES
+                ,"packId"+"03", "Interior Works",
+                "dummyurl", map2);
+        packageDetails.add(details);
+
+        TreeMap<String, String> map3 = new TreeMap<>();
+        map3.put("WMsub01", "Plumbing & sewage systems");
+        map3.put("WMsub02", "Sewage treatment & water treatment systems");
+        map3.put("WMsub03", "Pumps & pumping system");
+        map3.put("WMsub04", "Swimming pool maintenance");
+        details = new ServicePackageDetails(HorizontalGenericAdapter.AVAILABLE_PACKAGES
+                ,"packId"+"04", "Water Management",
+                "dummyurl", map3);
+        packageDetails.add(details);
+
+        TreeMap<String, String> map4 = new TreeMap<>();
+        map4.put("PMSsub01", "Property Management");
+        map4.put("PMSsub02", "Property Maintenance");
+        map4.put("PMSsub03", "Rent Management");
+        map4.put("PMSsub04", "Statutory payments");
+        details = new ServicePackageDetails(HorizontalGenericAdapter.AVAILABLE_PACKAGES
+                ,"packId"+"05", "Property Management services",
+                "dummyurl", map4);
+        packageDetails.add(details);
+
+        TreeMap<String, String> map5 = new TreeMap<>();
+        map5.put("GCGPIsub01", "Grass cutting");
+        map5.put("GCGPIsub02", "Hedge trimming");
+        map5.put("GCGPIsub03", "Weed Control");
+        map5.put("GCGPIsub04", "Garden clean up");
+        map5.put("GCGPIsub05", "Strimmer work");
+        map5.put("GCGPIsub06", "All Gas pipe installation & repairs");
+        details = new ServicePackageDetails(HorizontalGenericAdapter.AVAILABLE_PACKAGES
+                ,"packId"+"06", "Gardening & Copper Gas pipe installation",
+                "dummyurl", map5);
+        packageDetails.add(details);
+        return packageDetails;
     }
 
     @Override
@@ -79,12 +143,12 @@ public class MainFragment extends SingleMenuFragment {
 
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        return new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
     }
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        adapter = new GenericAdapter();
+        adapter = new VerticalGenericAdapter();
         return adapter;
     }
 
@@ -106,8 +170,8 @@ public class MainFragment extends SingleMenuFragment {
     // This method will be called when a SomeOtherEvent is posted
     @Subscribe
     public void onEventReceived(Object event) {
-        if (event instanceof HeaderThumbnailData.ThumbnailData) {
-            HeaderThumbnailData.ThumbnailData data = (HeaderThumbnailData.ThumbnailData) event;
+        if (event instanceof HeaderThumbnailData.HorizontalViewData) {
+            HeaderThumbnailData.HorizontalViewData data = (HeaderThumbnailData.HorizontalViewData) event;
             //((BaseActivity) getActivity()).setInfoMsg(data.getTitle());
             if (getActivity() instanceof PrimaryMainActivity){
                 ((PrimaryMainActivity) getActivity()).launchDetailsActivity(data);

@@ -3,6 +3,7 @@ package co.djphy.glance.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -12,7 +13,7 @@ import co.djphy.glance.R;
 import co.djphy.glance.fragments.MainFragment;
 import co.djphy.glance.utils.MyPrefManager;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseDrawerActivity {
     private static final String TAG = "MainActivity";
 
     /*@Override
@@ -35,11 +36,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public View getViewForLayoutAccess() {
-        return activity_main;
+        return rlMain;
     }
 
-    @BindView(R.id.activity_main)
-    FrameLayout activity_main;
+    @BindView(R.id.rlMain)
+    ViewGroup rlMain;
+    @BindView(R.id.flFragmentParent)
+    ViewGroup flFragmentParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setToolbarTitle("Apartment Name");
+
         MyPrefManager.getInstance().updateSessionCounts();
-        getSupportFragmentManager().beginTransaction().replace(activity_main.getId(), new MainFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(flFragmentParent.getId(), new MainFragment()).commit();
     }
 
     @Override

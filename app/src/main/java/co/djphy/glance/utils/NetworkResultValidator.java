@@ -6,6 +6,9 @@ import android.view.View;
 
 import com.androidquery.callback.AjaxStatus;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import co.djphy.glance.uiutils.ColoredSnackbar;
 
 
@@ -33,8 +36,20 @@ public class NetworkResultValidator {
 
     public boolean isResultOK(String value, final AjaxStatus status, View hostPort)
     {
-        if (!TextUtils.isEmpty(value))
-            return true;
+        if (TextUtils.isEmpty(value)){
+            return false;
+        }
+        else {
+            try {
+                JSONObject jsonObject = new JSONObject(value);
+                String msg = jsonObject.getString("message");
+                Snackbar snackbar = Snackbar.make(hostPort, msg, Snackbar.LENGTH_SHORT);
+                ColoredSnackbar.alert(snackbar).show();
+                return jsonObject.isNull("message");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         String serverMsg = "Internal Err";
         if (status != null){
             if (!TextUtils.isEmpty(status.getError()))
@@ -42,7 +57,7 @@ public class NetworkResultValidator {
             else if (status.getCode() == 200 && !(TextUtils.isEmpty(status.getMessage())))
                 serverMsg = status.getMessage();
         }
-        Snackbar snackbar = Snackbar.make(hostPort, serverMsg, Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(hostPort, serverMsg, Snackbar.LENGTH_LONG);
         ColoredSnackbar.alert(snackbar).show();
         return false;
         //return isResultOK( url,  value,   status, msg, hostPort, activityContext,null);

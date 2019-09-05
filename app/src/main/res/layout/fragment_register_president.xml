@@ -92,4 +92,36 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
+        android:theme="@style/TextInputLayoutStyleLogin"
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/etPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@drawable/generic_focus_variation_blackmat_grey"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnRegisterAcct"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/login_btns_height"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/sign_up"
+        android:background="@drawable/bg_2dp_curve_blue_filling"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAlternateWhite"
+        android:textSize="14sp" />
+
 </LinearLayout>

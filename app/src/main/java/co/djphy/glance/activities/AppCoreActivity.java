@@ -77,12 +77,16 @@ public abstract class AppCoreActivity extends AppCompatActivity {
                 serverCallEnds(id, url, json, status);
             }
         };
-        /*List<Cookie> cookies = getApp().getCookies();
-        if (cookies != null && cookies.size() != 0) {
-            for (Cookie cookie : cookies) {
-                ajaxCallback.cookie(cookie.getName(), cookie.getValue());
+        return ajaxCallback;
+    }
+
+
+    protected AjaxCallback getAjaxCallback(final int id, Object object) {
+        AjaxCallback<Object> ajaxCallback = new AjaxCallback<Object>() {
+            public void callback(String url, Object json, AjaxStatus status) {
+                serverCallEnds(object, id, url, json, status);
             }
-        }*/
+        };
         return ajaxCallback;
     }
 
@@ -96,6 +100,12 @@ public abstract class AppCoreActivity extends AppCompatActivity {
     }
 
     public void serverCallEnds(int id, String url, Object json, AjaxStatus status) {
+        Log.d(TAG, "url queried-" + TAG + ": " + url);
+        Log.d(TAG, "response-" + TAG + ": " + json);
+        stopProgress();
+    }
+
+    public void serverCallEnds(Object data, int id, String url, Object json, AjaxStatus status) {
         Log.d(TAG, "url queried-" + TAG + ": " + url);
         Log.d(TAG, "response-" + TAG + ": " + json);
         stopProgress();

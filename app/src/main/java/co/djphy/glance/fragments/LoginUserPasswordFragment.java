@@ -17,6 +17,7 @@ import co.djphy.glance.MyApplication;
 import co.djphy.glance.activities.NormalLoginActivity;
 import co.djphy.glance.uiutils.ColoredSnackbar;
 import co.djphy.glance.uiutils.UiRandomUtils;
+import co.djphy.glance.utils.IntentKeys;
 
 /**
  * Created by DJphy on 09-01-2017.
@@ -27,6 +28,14 @@ public class LoginUserPasswordFragment extends PrimaryBaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getArguments() != null){
+            Bundle bundle = getArguments();
+            String email = bundle.getString(IntentKeys.KEY_EMAIL_ID);
+            String password = bundle.getString(IntentKeys.KEY_PASSWORD);
+            etUserName.setText(email);
+            etPassword.setText(password);
+        }
 
         UiRandomUtils.getInstance().boldSomeTxt(signUp, 21, signUp.getText().toString().length());
 
@@ -88,6 +97,9 @@ public class LoginUserPasswordFragment extends PrimaryBaseFragment {
     }
 
     private boolean canContinue(){
-        return !(TextUtils.isEmpty(etPassword.getText().toString()) || TextUtils.isEmpty(etUserName.getText().toString()));
+        return !(TextUtils.isEmpty(etPassword.getText().toString())
+                || TextUtils.isEmpty(etUserName.getText().toString()));
     }
+
+
 }

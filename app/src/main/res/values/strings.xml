@@ -10,6 +10,8 @@
     <string name="email">Email Address</string>
     <string name="password">Password</string>
     <string name="login">Sign in</string>
+    <string name="customize">Customize</string>
+    <string name="sign_up">Sign up</string>
     <string name="forgot">Forgot Password?</string>
     <string name="acct_txt">Or sign in with Company\'s account</string>
     <string name="navigation_drawer_open">open</string>

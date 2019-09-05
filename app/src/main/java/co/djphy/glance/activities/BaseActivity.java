@@ -27,6 +27,7 @@ import java.util.Map;
 
 import co.djphy.glance.R;
 import co.djphy.glance.model.NavigationDataObject;
+import co.djphy.glance.model.UserInfo;
 import co.djphy.glance.uiutils.ColoredSnackbar;
 import co.djphy.glance.uiutils.DisplayProperties;
 import co.djphy.glance.uiutils.ViewConstructor;
@@ -122,41 +123,25 @@ public abstract class BaseActivity extends AppCoreActivity {
     }
 
 
-    public final int SOCIAL_LOGIN_CALL = IDUtils.generateViewId();
-    public void queryForSocialLogin(JSONObject inputParams){
-        startProgress();
-        AjaxCallback ajaxCallback = getAjaxCallback(SOCIAL_LOGIN_CALL);
-        ajaxCallback.method(AQuery.METHOD_POST);
-        ajaxCallback.header("content-type", "application/json");
-        String url = /*URLHelper.getInstance().getSocialLoginAPI()*/ " "; //// TODO: 08-07-2017  add social login actual API
-        Log.d(TAG, "POST url- queryForSocialLogin()" + TAG + ": " + url);
-        Map<String,Object> params = null;
-        try {
-            params = new ObjectMapper().readValue(inputParams.toString(), HashMap.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (params == null){
-            ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), "Sign in Failed", Snackbar.LENGTH_SHORT)).show();
-            return;
-        }
-        Log.d(TAG, "POST reqParams- queryForSocialLogin()" + TAG + ": " + params);
-        getAQuery().ajax(url, params, String.class, ajaxCallback);
-    }
+    Dialog alertDialogForgotPassword;
 
-    public final int NORMAL_LOGIN_CALL = IDUtils.generateViewId();
-    public void queryForLogin(String userId, String password) {
-        startProgress();
-        AjaxCallback ajaxCallback = getAjaxCallback(NORMAL_LOGIN_CALL);
-        ajaxCallback.method(AQuery.METHOD_POST);
-        String url = /*URLHelper.getInstance().getNormalLoginAPI()*/ " "; // TODO: 08-07-2017 add normal login API
-        Log.d(TAG, "POST url- queryForLogin()" + TAG + ": " + url);
-        Map<String, String> params = new HashMap<>();
-        params.put("email", userId);
-        params.put("password", password);
-        params.put("role", "intern");
-        Log.d(TAG, "POST reqParams- queryForLogin()" + TAG + ": " + params);
-        getAQuery().ajax(url, params, String.class, ajaxCallback);
+    public void performForgotPassword(){
+        alertDialogForgotPassword = null;
+        WindowUtils.getInstance().invokeForgotPasswordDialog(this, new ViewConstructor.InfoDisplayListener() {
+            @Override
+            public void onNegativeSelection(Dialog alertDialog) {
+
+            }
+
+            @Override
+            public void onPositiveSelection(Dialog alertDialog) {
+                alertDialogForgotPassword = alertDialog;
+                String txt = (String) ((AlertDialog) alertDialog)
+                        .getButton(AlertDialog.BUTTON_POSITIVE).getTag();
+                //queryForRenewSubs(txt);
+                //performChangeFromLogOffToCurrent(StaticTopBarFragment.MENU_SEARCH);
+            }
+        });
     }
 
     protected boolean isClearTask;
@@ -207,26 +192,42 @@ public abstract class BaseActivity extends AppCoreActivity {
 
     }
 
+    public final int SOCIAL_LOGIN_CALL = IDUtils.generateViewId();
+    public void queryForSocialLogin(JSONObject inputParams){
+        startProgress();
+        AjaxCallback ajaxCallback = getAjaxCallback(SOCIAL_LOGIN_CALL);
+        ajaxCallback.method(AQuery.METHOD_POST);
+        ajaxCallback.header("content-type", "application/json");
+        String url = /*URLHelper.getInstance().getSocialLoginAPI()*/ " "; //// TODO: 08-07-2017  add social login actual API
+        Log.d(TAG, "POST url- queryForSocialLogin()" + TAG + ": " + url);
+        Map<String,Object> params = null;
+        try {
+            params = new ObjectMapper().readValue(inputParams.toString(), HashMap.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (params == null){
+            ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), "Sign in Failed", Snackbar.LENGTH_SHORT)).show();
+            return;
+        }
+        Log.d(TAG, "POST reqParams- queryForSocialLogin()" + TAG + ": " + params);
+        getAQuery().ajax(url, params, String.class, ajaxCallback);
+    }
 
-    Dialog alertDialogForgotPassword;
+    public final int NORMAL_LOGIN_CALL = IDUtils.generateViewId();
 
-    public void performForgotPassword(){
-        alertDialogForgotPassword = null;
-        WindowUtils.getInstance().invokeForgotPasswordDialog(this, new ViewConstructor.InfoDisplayListener() {
-            @Override
-            public void onNegativeSelection(Dialog alertDialog) {
-
-            }
-
-            @Override
-            public void onPositiveSelection(Dialog alertDialog) {
-                alertDialogForgotPassword = alertDialog;
-                String txt = (String) ((AlertDialog) alertDialog)
-                        .getButton(AlertDialog.BUTTON_POSITIVE).getTag();
-                //queryForRenewSubs(txt);
-                //performChangeFromLogOffToCurrent(StaticTopBarFragment.MENU_SEARCH);
-            }
-        });
+    public void queryForLogin(String userId, String password) {
+        startProgress();
+        AjaxCallback ajaxCallback = getAjaxCallback(NORMAL_LOGIN_CALL);
+        ajaxCallback.method(AQuery.METHOD_POST);
+        String url = /*URLHelper.getInstance().getNormalLoginAPI()*/ " "; // TODO: 08-07-2017 add normal login API
+        Log.d(TAG, "POST url- queryForLogin()" + TAG + ": " + url);
+        Map<String, String> params = new HashMap<>();
+        params.put("email", userId);
+        params.put("password", password);
+        params.put("role", "intern");
+        Log.d(TAG, "POST reqParams- queryForLogin()" + TAG + ": " + params);
+        getAQuery().ajax(url, params, String.class, ajaxCallback);
     }
 
     @Override

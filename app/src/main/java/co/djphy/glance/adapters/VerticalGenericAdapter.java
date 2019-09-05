@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +22,19 @@ import butterknife.ButterKnife;
 import co.djphy.glance.R;
 import co.djphy.glance.model.HeaderThumbnailData;
 import co.djphy.glance.uiutils.UiRandomUtils;
-import co.djphy.glance.utils.IDUtils;
 
 /**
  * Created by User on 02-02-2018.
  */
 
-public class GenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements GenericAdapterInterface {
+public class VerticalGenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements GenericAdapterInterface {
 
-    public static final int HOME = IDUtils.generateViewId();
+    public static final int HORIZONTAL_VIEW = 1990;
+    public static final int CUSTOMIZE_BUTTON = 1889;
     //public static final int COURSES_MINE = IDUtils.generateViewId();
 
 
-    public GenericAdapter() {
+    public VerticalGenericAdapter() {
 
     }
 
@@ -44,11 +47,22 @@ public class GenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder getViewHolder(View view, int viewType) {
-        //if (viewType == HOME)
-        return new HeaderThumbnailViewHolder(view);
+        if (viewType == HORIZONTAL_VIEW)
+            return new HeaderHorizontalListViewHolder(view);
+        else if (viewType == CUSTOMIZE_BUTTON)
+            return new CustomizeButtonViewHolder(view);
         /*else if (viewType == COURSES_MINE)
-            return new MyCourseViewHolder(view);
-        else return null;*/
+            return new MyCourseViewHolder(view);*/
+        else return null;
+    }
+
+    @Override
+    public int getRootLayout(int viewType) {
+        if (viewType == HORIZONTAL_VIEW)
+        return R.layout.viewholder_header_thumbnail;
+        else if (viewType == CUSTOMIZE_BUTTON)
+            return R.layout.viewholder_customize_button;
+        return -1;
     }
 
 
@@ -59,7 +73,7 @@ public class GenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        return /*dataList.get(position).getViewType()*/0;
+        return dataList.get(position).getViewType();
     }
 
     @Override
@@ -75,8 +89,8 @@ public class GenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return;
         if (dataList.size() <= 0)
             return;
-        if (!(dataList.get(0) instanceof HeaderThumbnailData))
-            throw new IllegalArgumentException("Required data type \"HeaderThumbnailData\"");
+        /*if (!(dataList.get(0) instanceof HeaderThumbnailData))
+            throw new IllegalArgumentException("Required data type \"HeaderThumbnailData\"");*/
         this.dataList.clear();
         this.dataList.addAll(dataList);
         (new Handler(Looper.getMainLooper())).postDelayed(new Runnable() {
@@ -88,26 +102,54 @@ public class GenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public int getRootLayout(int viewType) {
-        return R.layout.viewholder_header_thumbnail;
-    }
-
-    @Override
     public void setOnClickListener(RecyclerView.ViewHolder holder) {
-
+        if (holder instanceof CustomizeButtonViewHolder)
+            ((CustomizeButtonViewHolder) holder).btnCustomize.setOnClickListener((View.OnClickListener) holder);
     }
 
 
-    class HeaderThumbnailViewHolder extends BaseItemHolder implements View.OnClickListener {
+    class CustomizeButtonViewHolder extends BaseItemHolder implements View.OnClickListener {
+
+        @BindView(R.id.btnCustomize)
+        MaterialButton btnCustomize;
+
+        public CustomizeButtonViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(itemView.getContext(), "go to details screen", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onItemViewUpdate(Object dataObject, RecyclerView.ViewHolder holder, int position) {
+            /*HeaderThumbnailData data = (HeaderThumbnailData) dataObject;
+            Bitmap bitmap = null;
+            try {
+                bitmap = Picasso.with(holder.itemView.getContext()).load("").get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Drawable drawable = new BitmapDrawable(holder.itemView.getResources(), bitmap);
+            btnCustomize.setIcon(drawable);*/
+            btnCustomize.setText("Customize Services");
+            //// TODO: 05-09-2019 enabled when api ready
+        }
+    }
+
+    class HeaderHorizontalListViewHolder extends BaseItemHolder implements View.OnClickListener {
 
         @BindView(R.id.rvMenu)
         RecyclerView rvMenu;
         @BindView(R.id.tvHeader)
         TextView tvHeader;
 
-        private ThumbnailAdapter adapter;
+        private HorizontalGenericAdapter adapter;
 
-        public HeaderThumbnailViewHolder(View itemView) {
+        public HeaderHorizontalListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             //setOnClickListener(this);
@@ -115,12 +157,13 @@ public class GenericAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         private void setUpRecycleView() {
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(itemView.getContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
             rvMenu.setHasFixedSize(false);
             rvMenu.setLayoutManager(mLayoutManager);
             rvMenu.setItemAnimator(new DefaultItemAnimator());
             UiRandomUtils.getInstance().addSnapper(rvMenu, Gravity.START);
-            rvMenu.setAdapter(adapter = new ThumbnailAdapter());
+            rvMenu.setAdapter(adapter = new HorizontalGenericAdapter());
         }
 
         @Override

@@ -54,7 +54,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     }
 
     @OnClick({R.id.nav_menu_home,
-            R.id.nav_menu_fav, R.id.nav_menu_profile,
+            R.id.nav_menu_privacy_policy, R.id.nav_menu_contact, R.id.nav_menu_profile,
             R.id.nav_menu_settings, R.id.nav_menu_about, R.id.nav_menu_logout})
     public void menuButtonClick(View view) {
         int id = view.getId();
@@ -153,6 +153,12 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
                 }
             });
         }
+    }
+
+
+    protected void setToolbarTitle(String string){
+        TextView toolbarTitle = (TextView)toolbar.findViewById(R.id.title);
+        toolbarTitle.setText(string);
     }
 
     @Override

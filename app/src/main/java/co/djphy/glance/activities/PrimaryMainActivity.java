@@ -71,7 +71,7 @@ public class PrimaryMainActivity extends TabsBaseActivity {
     }
 
 
-    public void launchDetailsActivity(HeaderThumbnailData.ThumbnailData data) {
+    public void launchDetailsActivity(HeaderThumbnailData.HorizontalViewData data) {
         /*Intent intent = new Intent(this, VideoDetailsActivity.class);
         DetailsData data1 = new DetailsData(data.getId(), data.getExtraData(),
                 data.getThumbnailUrl(), data.getTitle(), "");
