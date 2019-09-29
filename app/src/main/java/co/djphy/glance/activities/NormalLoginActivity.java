@@ -1,6 +1,7 @@
 package co.djphy.glance.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -106,7 +107,11 @@ public class NormalLoginActivity extends BaseActivity {
 
 
     public void onRegisterClickedDelegate(UserInfo info) {
-        queryForRegister(info);
+
+        //queryForRegister(info);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public final int REGISTER_CALL = IDUtils.generateViewId();

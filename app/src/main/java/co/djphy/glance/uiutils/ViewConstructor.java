@@ -260,8 +260,62 @@ public class ViewConstructor {
         return alert;
     }
 
+    public AlertDialog displayViewInfo(Activity activity, String title, View view, String positiveBtnText, boolean showTwoOptions,
+                                       final InfoDisplayListener mInfoListener) {
 
-    public AlertDialog displayViewInfo(Activity activity, String title, int viewResId, String positiveBtnText, boolean showTwoOptions,
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view).setPositiveButton(positiveBtnText,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        mInfoListener.onPositiveSelection(alert);
+                    }
+                })/*.setCancelable(false)*/;
+
+
+        if (showTwoOptions) {
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        /*AlertDialog */
+        alert = builder.create();
+        if (!TextUtils.isEmpty(title)) {
+            builder.setTitle(title);
+        }else {
+            alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        }
+        alert.getWindow().getAttributes().windowAnimations = R.style.AlertDialogAnimFromSide;
+        alert.show();
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
+        Button btnPositive = (alert.getButton(DialogInterface.BUTTON_POSITIVE));
+        //btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_PX, pixels_per_Xcell * 2);
+        btnPositive.setAllCaps(false);
+        btnPositive.setTextColor(ResourceReader.getInstance().getColorFromResource(R.color.colorAppPrimaryBg));
+
+        if (showTwoOptions) {
+            Button btnNegative = (alert.getButton(DialogInterface.BUTTON_NEGATIVE));
+            btnNegative.setAllCaps(false);
+            //btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_PX, pixels_per_Xcell * 2);
+            btnNegative.setTextColor(ResourceReader.getInstance().getColorFromResource(R.color.colorAppPrimaryBg));
+        }
+
+        ((TextView) alert.findViewById(android.R.id.message)).
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, pixels_per_Xcell * 3);
+
+        return alert;
+    }
+
+    public AlertDialog displayViewRsdId(Activity activity, String title, int viewResId, String positiveBtnText, boolean showTwoOptions,
                                        final InfoDisplayListener mInfoListener) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

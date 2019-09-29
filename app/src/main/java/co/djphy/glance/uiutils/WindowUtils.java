@@ -4,15 +4,31 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.marcoscg.dialogsheet.DialogSheet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import co.djphy.glance.R;
 import co.djphy.glance.MyApplication;
@@ -42,6 +58,114 @@ public class WindowUtils {
 
     public static void clearInstance(){
         thisInstance = null;
+    }
+
+    public void displayBottomSheetGenericMsg(Activity activity, String title, String msg,
+                                             String positive, String negative,
+                                             ViewConstructor.InfoDisplayListener infoDisplayListener){
+        DialogSheet dialogSheet = new DialogSheet(activity)
+                .setTitle(title)
+                .setMessage(msg)
+                //.setColoredNavigationBar(true)
+                .setCancelable(true)
+                .setPositiveButton(positive, new DialogSheet.OnPositiveClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Your action
+                        infoDisplayListener.onPositiveSelection(null);
+                    }
+                })
+                .setNegativeButton(negative, new DialogSheet.OnNegativeClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Your action
+                        infoDisplayListener.onNegativeSelection(null);
+                    }
+                });
+        //.setNeutralButton("Neutral", null)
+        //.setBackgroundColor(Color.BLACK) // Your custom background color
+        //.setButtonsColorRes(R.color.colorPrimary); // Default color is accent
+        //.show();
+        dialogSheet.show();
+    }
+
+    public void displayBottomSheetContactList(Activity activity){
+        View view = LayoutInflater.from(activity.getApplicationContext())
+                .inflate(R.layout.fragment_single_listview, null);
+        ListView rvMenu = view.findViewById(R.id.listView);
+        List<String> contacts = new ArrayList<>();
+        contacts.add("+919845711889");
+        contacts.add("+919980559750");
+        contacts.add("+919845385366");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
+                android.R.layout.simple_list_item_1, contacts);
+        rvMenu.setAdapter(adapter);
+        rvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                String number = contacts.get(position);
+                intent.setData(Uri.parse("tel:"+number));
+                activity.startActivity(intent);
+            }
+        });
+
+        DialogSheet dialogSheet = new DialogSheet(activity)
+                .setTitle("Contacts")
+                //.setMessage("")
+                //.setColoredNavigationBar(true)
+                .setCancelable(false)
+                .setPositiveButton("thanks", new DialogSheet.OnPositiveClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Your action
+                        //infoDisplayListener.onPositiveSelection(null);
+                    }
+                });
+                /*.setNegativeButton(negative, new DialogSheet.OnNegativeClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Your action
+                    }
+                });*/
+        //.setNeutralButton("Neutral", null)
+        //.setBackgroundColor(Color.BLACK) // Your custom background color
+        //.setButtonsColorRes(R.color.colorPrimary); // Default color is accent
+        //.show();
+        dialogSheet.setView(view);
+        dialogSheet.show();
+    }
+
+    public void displayBottomSheetDialog(Activity activity, String title,
+                                         String positive, String negative,
+                                         int layoutRsrId, View view,
+                                         ViewConstructor.InfoDisplayListener infoDisplayListener){
+        DialogSheet dialogSheet = new DialogSheet(activity)
+                .setTitle(title)
+                //.setMessage("")
+                //.setColoredNavigationBar(true)
+                .setCancelable(false)
+                .setPositiveButton(positive, new DialogSheet.OnPositiveClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Your action
+                        infoDisplayListener.onPositiveSelection(null);
+                    }
+                })
+                .setNegativeButton(negative, new DialogSheet.OnNegativeClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Your action
+                    }
+                });
+                //.setNeutralButton("Neutral", null)
+                //.setBackgroundColor(Color.BLACK) // Your custom background color
+                //.setButtonsColorRes(R.color.colorPrimary); // Default color is accent
+                //.show();
+                if (view == null)
+                    dialogSheet.setView(layoutRsrId);
+                else dialogSheet.setView(view);
+                dialogSheet.show();
     }
 
     public void genericPermissionInfoDialog(Activity activity, String message) {
@@ -84,9 +208,13 @@ public class WindowUtils {
         mViewConstructor.displayInfo(activity, title, infoMsg, posBtnTxt, colorInfoMsg, true, mInfoListener);
     }
 
+    public void invokeCustomizationDialog(Activity activity, View view, final ViewConstructor.InfoDisplayListener mInfoListener){
+        mViewConstructor.displayViewInfo(activity, "",
+                view, "Send Request", true, mInfoListener);
+    }
 
     public void invokeForgotPasswordDialog(Activity activity, final ViewConstructor.InfoDisplayListener mInfoListener) {
-        final androidx.appcompat.app.AlertDialog dialog = mViewConstructor.displayViewInfo(activity, "Forgot your password",
+        final androidx.appcompat.app.AlertDialog dialog = mViewConstructor.displayViewRsdId(activity, "Forgot your password",
                 R.layout.layout_edittext, "Send", true, mInfoListener);
         final EditText editText = (EditText) dialog.findViewById(R.id.etItem);
         final TextView textView = (TextView) dialog.findViewById(R.id.tvItem);

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -40,7 +41,8 @@ public abstract class SingleMenuFragment extends PrimaryBaseFragment {
     public abstract boolean isAddSnapper();
 
     @BindView(R.id.llBody)
-    LinearLayout llBody;
+    ViewGroup llBody;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,7 +68,7 @@ public abstract class SingleMenuFragment extends PrimaryBaseFragment {
         rvMenu.setAdapter(adapter);
     }
 
-    protected void setBodySettings(LinearLayout bodyLayout){
+    protected void setBodySettings(ViewGroup bodyLayout){
 
     }
 

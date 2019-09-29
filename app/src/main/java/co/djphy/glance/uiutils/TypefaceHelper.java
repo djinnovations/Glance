@@ -22,6 +22,12 @@ public class TypefaceHelper {
         Typeface typeface = getTypeFace(text.getContext(),fontName);
         text.setTypeface(typeface);
     }
+
+    public static void setFont(TextView text, int textStyle, String fontName) {
+        Typeface typeface = getTypeFace(text.getContext(),fontName);
+        text.setTypeface(typeface, textStyle);
+    }
+
     public static void setFont(TextInputLayout text, String fontName) {
         Typeface typeface = getTypeFace(text.getContext(),fontName);
         text.setTypeface(typeface);

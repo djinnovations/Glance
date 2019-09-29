@@ -15,7 +15,7 @@
     <item name="red" type="color">#FFFF4444</item>
     <item name="darkblue" type="color">#FF0099CC</item>
     <item name="darkpurple" type="color">#FF9933CC</item>
-    <item name="darkgreen" type="color">#FF669900</item>
+    <item name="darkgreen" type="color">#007f00</item>
     <item name="darkorange" type="color">#FFFF8800</item>
     <item name="darkred" type="color">#CC0000</item>
 

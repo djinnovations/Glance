@@ -20,15 +20,29 @@ public class NavigationDataObject implements MyApplication.IFragmentData{
 
     private int viewId;
     private Class targetClass;
+    private String fragmentName;
     private String title;
     private int targetType;
     private String urlIfWeb;
     private Object param;
 
+    public NavigationDataObject(int viewId) {
+        this.viewId = viewId;
+    }
+
     public NavigationDataObject(int viewId, Class targetClass, int targetType) {
         this.viewId = viewId;
         this.targetClass = targetClass;
         this.targetType = targetType;
+    }
+
+    public NavigationDataObject(int viewId, Class targetClass,
+                                String fragmentName, String title, int targetType) {
+        this.viewId = viewId;
+        this.targetClass = targetClass;
+        this.targetType = targetType;
+        this.title = title;
+        this.fragmentName = fragmentName;
     }
 
     public NavigationDataObject(int viewId, Class targetClass, String title, int targetType, String urlIfWeb) {
@@ -47,6 +61,9 @@ public class NavigationDataObject implements MyApplication.IFragmentData{
         this.urlIfWeb = urlIfWeb;
     }
 
+    public String getFragmentName() {
+        return fragmentName;
+    }
 
     public String getUrlIfWeb() {
         return urlIfWeb;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?attr/colorControlHighlight">
+    <item>
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <item
+                android:state_enabled="true"
+                android:state_pressed="true">
+                <shape android:shape="oval">
+                    <padding
+                        android:bottom="3dp"
+                        android:left="3dp"
+                        android:right="3dp"
+                        android:top="3dp" />
+                    <solid android:color="@color/colorPrimary" />
+                </shape>
+            </item>
+
+            <item android:state_enabled="true">
+                <shape android:shape="oval">
+                    <padding
+                        android:bottom="3dp"
+                        android:left="3dp"
+                        android:right="3dp"
+                        android:top="3dp" />
+                    <solid android:color="@color/colorPrimary" />
+                </shape>
+            </item>
+
+            <item android:state_enabled="false">
+                <shape android:shape="oval">
+                    <padding
+                        android:bottom="3dp"
+                        android:left="3dp"
+                        android:right="3dp"
+                        android:top="3dp" />
+                    <solid android:color="@color/colorGrey" />
+                </shape>
+            </item>
+
+        </selector>
+    </item>
+</ripple>

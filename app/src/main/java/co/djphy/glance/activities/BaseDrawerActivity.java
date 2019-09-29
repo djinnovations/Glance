@@ -53,7 +53,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         setupHeader();
     }
 
-    @OnClick({R.id.nav_menu_home,
+    @OnClick({R.id.nav_menu_home,R.id.nav_menu_report, R.id.nav_menu_qrt,
             R.id.nav_menu_privacy_policy, R.id.nav_menu_contact, R.id.nav_menu_profile,
             R.id.nav_menu_settings, R.id.nav_menu_about, R.id.nav_menu_logout})
     public void menuButtonClick(View view) {
@@ -89,52 +89,9 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setMenuCustom(menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
-
-    private void setMenuCustom(Menu menu) {
-        if (menu != null) {
-            menu.clear();
-        }
-        MenuInflater inflater = getMenuInflater();
-        /*inflater.inflate(R.menu.main, menu);
-        final MenuItem item = menu.findItem(R.id.nav_my_notifications);
-
-        if (item != null) {
-            MenuItemCompat.setActionView(item, R.layout.notification_badge);
-
-            TextView textView = (TextView) item.getActionView()
-                    .findViewById(R.id.tvNotifyCount);
-            item.getActionView().setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    onOptionsItemSelected(item);
-                }
-            });
-
-            String unreadCount = RandomUtils.getUnreadCount();
-            if (TextUtils.isEmpty(*//*mCount*//*unreadCount)) {
-                if (textView != null) {
-                    textView.setVisibility(View.INVISIBLE);
-                }
-            } else if (*//*mCount*//*unreadCount.equalsIgnoreCase("0")) {
-                if (textView != null) {
-                    textView.setVisibility(View.INVISIBLE);
-                }
-            } else {
-                if (textView != null) {
-                    textView.setVisibility(View.VISIBLE);
-                    textView.setText(*//*mCount*//*unreadCount);
-                }
-            }
-        }*/
-    }
-
-
-    private String mCount = "";
 
     protected void bindViews() {
 
@@ -163,21 +120,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
         return super.onOptionsItemSelected(item);
-       /* if (id == R.id.nav_my_search) {
-            startActivity(new Intent(this, SearchActivity.class));
-            //Toast.makeText(getApplication(), "Feature Coming Soon", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        boolean returnVal = false;
-        NavigationDataObject navigationDataObject = (NavigationDataObject) getApp().getMainMenu().get(id);
-        if (navigationDataObject != null)
-            returnVal = action(navigationDataObject);
-
-        if (returnVal)
-            return returnVal;
-        return super.onOptionsItemSelected(item);*/
     }
 
 

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llBody"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_issue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal"
+        android:theme="@style/TextInputLayoutStyleLogin"
+        app:errorEnabled="true">
+
+        <android.widget.EditText
+            android:id="@+id/etIssue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Issue description"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:textColor="@drawable/generic_focus_variation_blackmat_grey"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_layout_issue"
+        android:layout_marginTop="-16dp"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal"
+        android:theme="@style/TextInputLayoutStyleLogin"
+        app:errorEnabled="true">
+
+        <android.widget.EditText
+            android:id="@+id/etphNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:textColor="@drawable/generic_focus_variation_blackmat_grey"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llBottom"
+        android:layout_below="@+id/input_layout_phNum"
+        android:layout_marginBottom="20dp"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@drawable/shadow_up" />
+
+        <TextView
+            android:id="@+id/tvQRT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_2dp_curve_blue_filling"
+            android:clickable="true"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Request Quick Reaction"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+</RelativeLayout>

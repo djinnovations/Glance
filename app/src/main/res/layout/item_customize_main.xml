@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingTop="10dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="10dp"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.4"
+            android:fontFamily="@font/montserrat"
+            android:textSize="16sp"
+            android:typeface="sans"
+            tools:text="New Text" />
+
+        <TextView
+            android:id="@+id/extra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:fontFamily="@font/montserrat"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:textSize="14sp"
+            android:typeface="serif"
+            tools:text="0" />
+
+        <!--<org.github.images.CircularImageView
+            android:id="@+id/image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:visibility="gone" />-->
+
+        <ImageView
+            android:layout_marginStart="0dp"
+            android:id="@+id/ivAddRemove"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/extra_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="6dp"
+        android:background="@android:color/black" />
+</LinearLayout>

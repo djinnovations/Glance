@@ -13,10 +13,12 @@ import java.util.List;
 import java.util.TreeMap;
 
 import co.djphy.glance.MyApplication;
+import co.djphy.glance.activities.MainActivity;
 import co.djphy.glance.activities.PrimaryMainActivity;
 import co.djphy.glance.adapters.VerticalGenericAdapter;
 import co.djphy.glance.adapters.HorizontalGenericAdapter;
 import co.djphy.glance.model.HeaderThumbnailData;
+import co.djphy.glance.model.OwnedPackagesDataObject;
 import co.djphy.glance.model.ServicePackageDetails;
 
 /**
@@ -28,8 +30,52 @@ public class MainFragment extends SingleMenuFragment {
     private VerticalGenericAdapter adapter;
 
     @Override
+    public boolean isAddSnapper() {
+        return false;
+    }
+
+    @Override
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+    }
+
+    @Override
+    protected RecyclerView.Adapter getAdapter() {
+        adapter = new VerticalGenericAdapter();
+        return adapter;
+    }
+
+    @Override
+    public void changeData(List dataList) {
+        try {
+            if (adapter != null)
+                adapter.changeData(dataList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onGarbageCollection() {
+        adapter = null;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFirstEntry)
+            isFirstEntry = false;
+        else
+            adapter.notifyIndexChange(0);
+    }
+
+    private boolean isFirstEntry;
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        isFirstEntry = true;
         Runnable runnable = new Runnable() {
             public void run() {
                 setDummy();
@@ -47,13 +93,29 @@ public class MainFragment extends SingleMenuFragment {
                     imax = 15;
                     jmax = 10;
                 }
-                List<Object> objectList = createServicePackages();
+                List<Object> objectList = ((MainActivity) getActivity()).packageDetailsList;
                 List<HeaderThumbnailData> dataList = new ArrayList<>();
+                List<Object> horizontalViewDataList = new ArrayList<>();
+                List<Object> ownedList = new ArrayList<>();
+                for (int i = 0; i< 2; i++){
+                    ServicePackageDetails servicePackageDetails = (ServicePackageDetails) objectList.get(i);
+                    OwnedPackagesDataObject dataObject = new OwnedPackagesDataObject
+                            (HorizontalGenericAdapter.OWNED_PACKAGE, "oct\n16\n2019",
+                                    "nov\n01\n2019", servicePackageDetails.packageName,
+                                    new ArrayList<>(servicePackageDetails.subPackagesMap.values()));
+                    ownedList.add(dataObject);
+                }
+                /*ownedList.add(new HeaderThumbnailData.HorizontalViewData(HorizontalGenericAdapter
+                        .OWNED_PACKAGE, "id1"));
+                ownedList.add(new HeaderThumbnailData.HorizontalViewData(HorizontalGenericAdapter
+                        .OWNED_PACKAGE, "id2"));*/
                 for (int i =0; i < imax; i++){
-                    List<Object> horizontalViewDataList = new ArrayList<>();
-                    if (i == 0)
+                    if (i == 0) {
+                        dataList.add(new HeaderThumbnailData(VerticalGenericAdapter.HORIZONTAL_VIEW,
+                                "", ownedList));
                         dataList.add(new HeaderThumbnailData(VerticalGenericAdapter.CUSTOMIZE_BUTTON,
                                 "header-"+String.valueOf(i), horizontalViewDataList));
+                    }
                     else if (i > 0){
                         dataList.add(new HeaderThumbnailData(VerticalGenericAdapter.HORIZONTAL_VIEW,
                                 "header-"+String.valueOf(i), objectList
@@ -134,37 +196,6 @@ public class MainFragment extends SingleMenuFragment {
                 "dummyurl", map5);
         packageDetails.add(details);
         return packageDetails;
-    }
-
-    @Override
-    public boolean isAddSnapper() {
-        return false;
-    }
-
-    @Override
-    public RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-    }
-
-    @Override
-    protected RecyclerView.Adapter getAdapter() {
-        adapter = new VerticalGenericAdapter();
-        return adapter;
-    }
-
-    @Override
-    public void changeData(List dataList) {
-        try {
-            if (adapter != null)
-                adapter.changeData(dataList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onGarbageCollection() {
-        adapter = null;
     }
 
     // This method will be called when a SomeOtherEvent is posted

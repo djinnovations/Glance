@@ -15,7 +15,7 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etEmailId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/">-->
 
-    <Button
+    <android.widget.Button
         android:id="@+id/btnLoginAcct"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/login_btns_height"

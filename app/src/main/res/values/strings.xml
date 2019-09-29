@@ -26,6 +26,8 @@
     <!--Glance addition-->
     <string name="signUp">Dont have an account? Sign Up</string>
     <string name="authname">Authority Name</string>
+    <string name="num_of_flats">Number of Units</string>
+    <string name="phone">Phone number</string>
 
 
 </resources>

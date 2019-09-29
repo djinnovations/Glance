@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="1dp"
+    android:layout_marginStart="1dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+
+    <View
+        android:id="@+id/viewSeparator"
+        android:layout_width="2dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rlCheckHolder"
+        android:layout_alignBottom="@+id/rlCheckHolder"
+        android:background="@color/colorAccent"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rlCheckHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp">
+
+        <com.rey.material.widget.CircleCheckedTextView
+            android:id="@+id/cTV"
+            android:clickable="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/btn_check"
+            android:checked="true"
+            android:maxLength="3"
+            android:scrollHorizontally="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            tools:text="Plattinum" />
+
+        <ImageView
+            android:id="@+id/ivCheck"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignEnd="@+id/cTV"
+            android:padding="2dp" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cTV"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/montserrat"
+            android:maxLines="2"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="1dp"
+            android:textColor="@color/colorMaterialBlack"
+            android:textSize="12sp"
+            android:typeface="serif"
+            tools:text="New Text" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

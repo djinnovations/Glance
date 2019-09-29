@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginEnd="2dp"
+    android:layout_marginBottom="2dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="@dimen/wide_thumbnail_width"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivBlurry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/vgRoot"
+            android:layout_alignTop="@+id/vgRoot"
+            android:layout_alignEnd="@+id/vgRoot"
+            android:layout_alignBottom="@+id/vgRoot"
+            android:alpha="1"
+            android:scaleType="centerCrop"
+            android:src="@color/colorMaterialBlack" />
+
+
+        <RelativeLayout
+            android:id="@+id/vgRoot"
+            android:layout_width="@dimen/wide_thumbnail_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp">
+
+            <LinearLayout
+                android:id="@+id/vgPurchaseInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGrey"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/montserrat"
+                    android:paddingStart="6dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="0dp"
+                    android:text="Purchased On"
+                    android:textColor="@color/colorMaterialBlack"
+                    android:textSize="12sp"
+                    android:typeface="monospace"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvPurchasedOnDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:paddingStart="6dp"
+                    android:paddingTop="0dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="oct\n16\n2019"
+                    android:textColor="@color/colorMaterialBlack"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="center"
+                        android:paddingStart="6dp"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="2dp"
+                        android:text="Next Billing date: "
+                        android:textColor="@color/colorMaterialBlack"
+                        android:textSize="12sp"
+                        android:typeface="monospace"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvNextBillingDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="center"
+                        android:paddingStart="6dp"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="2dp"
+                        android:text="nov\n01\n2019"
+                        android:textColor="@color/colorMaterialBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:typeface="serif"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewHalfCircle"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/vgPurchaseInfo"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/half_circle" />
+
+            <LinearLayout
+                android:id="@+id/vgShiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewHalfCircle"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:weightSum="2">
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:id="@+id/ivGlow"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:allow_random_color="false"
+                    app:big_shine_color="@color/darkgreen"
+                    app:btn_color="@color/darkgreen"
+                    app:btn_fill_color="@color/darkgreen"
+                    app:click_animation_duration="200"
+                    app:enable_flashing="true"
+                    app:shine_animation_duration="1500"
+                    app:shine_count="8"
+                    app:shine_turn_angle="10"
+                    app:siShape="@drawable/bg_circle_orange"
+                    app:small_shine_color="#CC9999"
+                    app:small_shine_offset_angle="20" />
+
+                <TextView
+                    android:id="@+id/tvPackageName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1.8"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat"
+                    android:maxLines="1"
+                    android:paddingStart="6dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="Package Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vgShiner"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="6dp"
+                android:text="Next Billing date: "
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:typeface="serif"
+                android:visibility="gone" />
+
+            <com.hanks.htextview.evaporate.EvaporateTextView
+                android:id="@+id/tvEvaporate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vgShiner"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserrat"
+                android:maxLines="2"
+                android:paddingStart="6dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="20dp"
+                android:text="this is init sentence"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

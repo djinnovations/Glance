@@ -78,6 +78,10 @@ public class HeaderThumbnailData implements Parcelable{
         private String title;
         private String title1;
 
+        public HorizontalViewData(int viewType, String id) {
+            this.viewType = viewType;
+            this.id = id;
+        }
 
         public HorizontalViewData(int viewType, String id, String thumbnailUrl,
                                   String extraData, String type, String title) {

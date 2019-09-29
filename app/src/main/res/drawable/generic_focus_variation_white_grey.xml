@@ -9,6 +9,6 @@
     <!--<item android:drawable="@color/colorMainMenuBgSelected"
         android:state_enabled="true"
         android:state_selected="true" />-->
-    <item android:color="@color/colorGrey"
+    <item android:color="@color/colorAlternateWhite"
         android:state_enabled="true" />
 </selector>

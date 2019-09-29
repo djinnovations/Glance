@@ -24,6 +24,8 @@
         android:text=""
         android:textColor="@color/colorBlackDimText"
         android:textSize="14sp"
+        android:fontFamily="@font/montserrat"
+        android:typeface="monospace"
         android:textStyle="bold"
         android:visibility="visible" />
 

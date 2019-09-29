@@ -58,18 +58,22 @@
         <activity android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <activity android:name=".activities.WebActivity">
 
         </activity>
         <activity android:name=".activities.LoginActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
 
         <activity android:name=".activities.PrimaryMainActivity"
@@ -80,12 +84,43 @@
             </intent-filter>-->
         </activity>
 
+        <activity android:name=".activities.ReportsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity android:name=".activities.EmptyActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity android:name=".activities.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
         <activity android:name=".activities.NormalLoginActivity">
-           <!-- <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.ServicePackageDetailsActivity">
+
         </activity>
 
     </application>

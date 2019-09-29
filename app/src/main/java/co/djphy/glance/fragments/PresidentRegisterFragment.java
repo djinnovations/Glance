@@ -103,6 +103,10 @@ public class PresidentRegisterFragment extends PrimaryBaseFragment {
     EditText etPassword;
     @BindView(R.id.etPasswordConfirm)
     EditText etPasswordConfirm;
+    @BindView(R.id.etphNum )
+    EditText etphNum;
+    @BindView(R.id.etNumberOfUnits)
+    EditText etNumberOfUnits;
 
 
     @OnClick(R.id.btnRegisterAcct)
@@ -120,6 +124,8 @@ public class PresidentRegisterFragment extends PrimaryBaseFragment {
         return !(TextUtils.isEmpty(etEmailId.getText().toString())
                 || TextUtils.isEmpty(etUserName.getText().toString())
                 || TextUtils.isEmpty(etPassword.getText().toString())
+                || TextUtils.isEmpty(etNumberOfUnits.getText().toString())
+                || TextUtils.isEmpty(etphNum.getText().toString())
                 || TextUtils.isEmpty(etPasswordConfirm.getText().toString()));
     }
 

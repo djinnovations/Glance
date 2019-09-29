@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class ServicePackageDetails implements Parcelable {
@@ -12,7 +13,7 @@ public class ServicePackageDetails implements Parcelable {
     public String packageName;
     public String bgImageUrl;
     public int itemViewType;
-    public TreeMap<String, String> subPackagesMap;
+    public TreeMap<String, String> subPackagesMap = new TreeMap<>();
 
     public ServicePackageDetails(int itemViewType, String packageId, String packageName,
                                  String bgImageUrl, TreeMap<String, String> subPackagesMap) {
@@ -28,7 +29,12 @@ public class ServicePackageDetails implements Parcelable {
         packageName = in.readString();
         bgImageUrl = in.readString();
         itemViewType = in.readInt();
-        subPackagesMap = (TreeMap) in.readValue(TreeMap.class.getClassLoader());
+        int size = in.readInt();
+        for(int i = 0; i < size; i++){
+            String key = in.readString();
+            String value = in.readString();
+            subPackagesMap.put(key,value);
+        }
     }
 
     @Override
@@ -42,7 +48,12 @@ public class ServicePackageDetails implements Parcelable {
         dest.writeString(packageName);
         dest.writeString(bgImageUrl);
         dest.writeInt(itemViewType);
-        dest.writeValue(subPackagesMap);
+        //dest.writeMap(subPackagesMap);
+        dest.writeInt(subPackagesMap.size());
+        for(Map.Entry<String,String> entry : subPackagesMap.entrySet()){
+            dest.writeString(entry.getKey());
+            dest.writeString(entry.getValue());
+        }
     }
 
     @SuppressWarnings("unused")

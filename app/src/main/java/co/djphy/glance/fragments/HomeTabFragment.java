@@ -1,5 +1,6 @@
 package co.djphy.glance.fragments;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import co.djphy.glance.MyApplication;
 import co.djphy.glance.activities.TabsBaseActivity;
 import co.djphy.glance.redundant.BaseFragment;
 import co.djphy.glance.uiutils.DisplayProperties;
+import co.djphy.glance.uiutils.TypefaceHelper;
 
 public class HomeTabFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
@@ -158,7 +160,7 @@ public class HomeTabFragment extends BaseFragment implements ViewPager.OnPageCha
         @Override
         public Fragment getItem(int position) {
            /* if (position == 0) {
-                return new TabFragment1();
+                return new DailyReportFragment();
             }
             else if (position == 1) {
                 return new TabFragment2();
@@ -195,7 +197,7 @@ public class HomeTabFragment extends BaseFragment implements ViewPager.OnPageCha
         @Override
         public CharSequence getPageTitle(int position) {
             if (position == 0)
-                return "TabFragment1";
+                return "DailyReportFragment";
             else if (position == 1)
                 return "TabFragment2";
             return super.getPageTitle(position);
@@ -306,6 +308,7 @@ public class HomeTabFragment extends BaseFragment implements ViewPager.OnPageCha
                     }
                 });
                 setTabWidth();
+                TypefaceHelper.setFont(textView, Typeface.BOLD, "didot-italic.ttf");
             }
 
             private void setTabWidth() {

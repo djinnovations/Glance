@@ -39,12 +39,53 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/authname"
             android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="@drawable/generic_focus_variation_blackmat_grey"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_numberOfUnits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
+        android:theme="@style/TextInputLayoutStyleLogin"
+        app:errorEnabled="true">
+
+        <android.widget.EditText
+            android:id="@+id/etNumberOfUnits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/num_of_flats"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="@drawable/generic_focus_variation_blackmat_grey"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
+        android:theme="@style/TextInputLayoutStyleLogin"
+        app:errorEnabled="true">
+
+        <android.widget.EditText
+            android:id="@+id/etphNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone"
+            android:inputType="phone"
             android:maxLines="1"
             android:textColor="@drawable/generic_focus_variation_blackmat_grey"
             android:textSize="14sp" />
@@ -59,7 +100,7 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etEmailId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,7 +121,7 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,11 +141,11 @@
         android:theme="@style/TextInputLayoutStyleLogin"
         app:errorEnabled="true">
 
-        <EditText
+        <android.widget.EditText
             android:id="@+id/etPasswordConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
+            android:hint="Confirm Password"
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@drawable/generic_focus_variation_blackmat_grey"
@@ -112,7 +153,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/btnRegisterAcct"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/login_btns_height"

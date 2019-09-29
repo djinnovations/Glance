@@ -48,9 +48,9 @@ public class PrimaryMainActivity extends TabsBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        indicator.getLayoutParams().width = (int) (35 * displayProperties.getXPixelsPerCell());
-        indicator.getLayoutParams().height = (int) (9 * displayProperties.getYPixelsPerCell());
-        MyPrefManager.getInstance().updateSessionCounts();
+        getPageIndicator().getLayoutParams().width = (int) (35 * displayProperties.getXPixelsPerCell());
+        getPageIndicator().getLayoutParams().height = (int) (9 * displayProperties.getYPixelsPerCell());
+        //MyPrefManager.getInstance().updateSessionCounts();
     }
 
     @Override

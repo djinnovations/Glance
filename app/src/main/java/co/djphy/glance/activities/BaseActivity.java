@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.djphy.glance.R;
+import co.djphy.glance.fragments.DailyReportFragment;
 import co.djphy.glance.model.NavigationDataObject;
 import co.djphy.glance.model.UserInfo;
 import co.djphy.glance.uiutils.ColoredSnackbar;
@@ -33,6 +37,7 @@ import co.djphy.glance.uiutils.DisplayProperties;
 import co.djphy.glance.uiutils.ViewConstructor;
 import co.djphy.glance.uiutils.WindowUtils;
 import co.djphy.glance.utils.IDUtils;
+import co.djphy.glance.utils.IntentKeys;
 
 /**
  * Created by DJphy on 25-01-2017.
@@ -51,7 +56,7 @@ public abstract class BaseActivity extends AppCoreActivity {
         displayProperties = DisplayProperties.getInstance(orient);
     }
 
-    public void setErrMsgWithOk(String msg, String btnTxt){
+    public void setErrMsgWithOk(String msg, String btnTxt) {
         final Snackbar snackbar = Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(btnTxt, new View.OnClickListener() {
             public void onClick(View v) {
@@ -61,11 +66,11 @@ public abstract class BaseActivity extends AppCoreActivity {
         ColoredSnackbar.info(snackbar).show();
     }
 
-    public void setErrMsg(String msg){
+    public void setErrMsg(String msg) {
         ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
     }
 
-    public void setErrMsgIndefinite(String msg){
+    public void setErrMsgIndefinite(String msg) {
         ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_INDEFINITE)).show();
     }
 
@@ -86,23 +91,23 @@ public abstract class BaseActivity extends AppCoreActivity {
         setErrMsg(msg);
     }
 
-    public void setWarningMsg(String msg){
+    public void setWarningMsg(String msg) {
         ColoredSnackbar.warning(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
     }
 
-    public void setInfoMsg(String msg){
+    public void setInfoMsg(String msg) {
         ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_SHORT)).show();
     }
 
-    public void setInfoMsg(String msg, int length){
+    public void setInfoMsg(String msg, int length) {
         ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, length)).show();
     }
 
-    public void setInfoMsgIndefinite(String msg){
+    public void setInfoMsgIndefinite(String msg) {
         ColoredSnackbar.info(Snackbar.make(getViewForLayoutAccess(), msg, Snackbar.LENGTH_INDEFINITE)).show();
     }
 
-    protected View addBack(ViewGroup root){
+    protected View addBack(ViewGroup root) {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_back, root, false);
         if (root.findViewById(R.id.ivPrimaryBack) != null)
             return null;
@@ -125,7 +130,7 @@ public abstract class BaseActivity extends AppCoreActivity {
 
     Dialog alertDialogForgotPassword;
 
-    public void performForgotPassword(){
+    public void performForgotPassword() {
         alertDialogForgotPassword = null;
         WindowUtils.getInstance().invokeForgotPasswordDialog(this, new ViewConstructor.InfoDisplayListener() {
             @Override
@@ -148,39 +153,53 @@ public abstract class BaseActivity extends AppCoreActivity {
 
     public boolean action(NavigationDataObject navigationDataObject) {
         int actionType = navigationDataObject.getTargetType();
-        Log.d(TAG, "actionType: "+actionType);
+        Log.d(TAG, "actionType: " + actionType);
         Intent intent;
-        if (actionType == NavigationDataObject.ACTIVITY){
+        if (actionType == NavigationDataObject.ACTIVITY) {
             Class target = navigationDataObject.getTargetClass();
             if (target != null) {
                 intent = new Intent(this, target);
+                if (target.getSimpleName().equalsIgnoreCase("EmptyActivity")) {
+                    intent.putExtra(IntentKeys.KEY_FRAGMENT_NAME, navigationDataObject.getFragmentName());
+                    intent.putExtra(IntentKeys.TITLE, navigationDataObject.getTitle());
+                }
                 //add flags if any
 
                 startActivity(intent);
             }
-        }else if (actionType == NavigationDataObject.WEB_ACTIVITY){
+        } else if (actionType == NavigationDataObject.WEB_ACTIVITY) {
 
-        }else if (actionType == NavigationDataObject.LOGOUT){
+        } else if (actionType == NavigationDataObject.LOGOUT) {
             //// TODO: 08-07-2017  perform logout
-            Class target = navigationDataObject.getTargetClass();
-            if (target != null) {
-                intent = new Intent(this, target);
-                //intent.putExtra("lycavidurl", url);
-                if (isClearTask)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                else intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getSelf().finish();
+            ViewConstructor.InfoDisplayListener infoDisplayListener = new ViewConstructor.InfoDisplayListener() {
+                @Override
+                public void onNegativeSelection(Dialog alertDialog) {
+                    isClearTask = true;
+                    Class target = navigationDataObject.getTargetClass();
+                    if (target != null) {
+                        Intent intent = new Intent(BaseActivity.this, target);
+                        //intent.putExtra("lycavidurl", url);
+                        if (isClearTask)
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        else intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
-                }, 500);
-            }
-        }else if (actionType == NavigationDataObject.SHARE){
+                }
+
+                @Override
+                public void onPositiveSelection(Dialog alertDialog) {
+
+                }
+            };
+            WindowUtils.getInstance().displayBottomSheetGenericMsg(this, "LogOff",
+                    "Sure you gotta Logout?", "Nope", "Sure", infoDisplayListener);
+
+        } else if (actionType == NavigationDataObject.SHARE) {
             //// TODO: 08-07-2017  any share actions here 
-        }else if (actionType == NavigationDataObject.RATE_US){
+        } else if (actionType == NavigationDataObject.RATE_US) {
             //// TODO: 08-07-2017 rate us on playstore here 
+        } else if (navigationDataObject.getViewId() == R.id.nav_menu_contact) {
+            WindowUtils.getInstance().displayBottomSheetContactList(BaseActivity.this);
         }
         return true;
     }
@@ -193,20 +212,21 @@ public abstract class BaseActivity extends AppCoreActivity {
     }
 
     public final int SOCIAL_LOGIN_CALL = IDUtils.generateViewId();
-    public void queryForSocialLogin(JSONObject inputParams){
+
+    public void queryForSocialLogin(JSONObject inputParams) {
         startProgress();
         AjaxCallback ajaxCallback = getAjaxCallback(SOCIAL_LOGIN_CALL);
         ajaxCallback.method(AQuery.METHOD_POST);
         ajaxCallback.header("content-type", "application/json");
         String url = /*URLHelper.getInstance().getSocialLoginAPI()*/ " "; //// TODO: 08-07-2017  add social login actual API
         Log.d(TAG, "POST url- queryForSocialLogin()" + TAG + ": " + url);
-        Map<String,Object> params = null;
+        Map<String, Object> params = null;
         try {
             params = new ObjectMapper().readValue(inputParams.toString(), HashMap.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (params == null){
+        if (params == null) {
             ColoredSnackbar.alert(Snackbar.make(getViewForLayoutAccess(), "Sign in Failed", Snackbar.LENGTH_SHORT)).show();
             return;
         }
@@ -233,7 +253,7 @@ public abstract class BaseActivity extends AppCoreActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(isTaskRoot()){
+        if (isTaskRoot()) {
             //clean the file cache with advance option
             //long triggerSize = 3000000; //starts cleaning when cache size is larger than 3M
             //long targetSize = 2000000;  //remove the least recently used files until cache size is less than 2M

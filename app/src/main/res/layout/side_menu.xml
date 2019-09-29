@@ -34,6 +34,33 @@
             android:textSize="16sp"
             android:typeface="serif" />
 
+
+        <TextView
+            android:id="@+id/nav_menu_report"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/link_button_bg"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start|center_vertical"
+            android:paddingStart="10dp"
+            android:text="Reports"
+            android:textColor="@color/colorMaterialBlack"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/nav_menu_qrt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/link_button_bg"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start|center_vertical"
+            android:paddingStart="10dp"
+            android:text="Quick Response Services"
+            android:textColor="@color/colorMaterialBlack"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
         <TextView
             android:id="@+id/nav_menu_profile"
             android:layout_width="match_parent"
@@ -53,21 +80,6 @@
             android:layout_marginTop="0dp"
             android:background="@color/darkblue" />
 
-
-        <TextView
-            android:id="@+id/nav_menu_privacy_policy"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:background="@drawable/link_button_bg"
-            android:fontFamily="@font/montserrat"
-            android:gravity="start|center_vertical"
-            android:paddingStart="10dp"
-            android:paddingBottom="6dp"
-            android:text="Privacy Policy"
-            android:textColor="@color/colorMaterialBlack"
-            android:textSize="16sp"
-            android:typeface="serif" />
-
         <TextView
             android:id="@+id/nav_menu_contact"
             android:layout_width="match_parent"
@@ -77,6 +89,19 @@
             android:gravity="start|center_vertical"
             android:paddingStart="10dp"
             android:text="Contact Us"
+            android:textColor="@color/colorMaterialBlack"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/nav_menu_privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/link_button_bg"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start|center_vertical"
+            android:paddingStart="10dp"
+            android:text="Privacy Policy"
             android:textColor="@color/colorMaterialBlack"
             android:textSize="16sp"
             android:typeface="serif" />
@@ -92,7 +117,8 @@
             android:text="Settings"
             android:textColor="@color/colorMaterialBlack"
             android:textSize="16sp"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/nav_menu_about"

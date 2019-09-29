@@ -7,18 +7,28 @@ import android.os.Handler;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import co.djphy.glance.activities.EmptyActivity;
 import co.djphy.glance.activities.LoginActivity;
 import co.djphy.glance.activities.MainActivity;
+import co.djphy.glance.activities.NormalLoginActivity;
+import co.djphy.glance.activities.ProfileActivity;
+import co.djphy.glance.activities.ReportsActivity;
 import co.djphy.glance.activities.WebActivity;
+import co.djphy.glance.fragments.DailyReportFragment;
 import co.djphy.glance.fragments.HomeTabFragment;
+import co.djphy.glance.model.DailyProgressDetails;
 import co.djphy.glance.model.NavigationDataObject;
 import co.djphy.glance.model.UserInfo;
+import co.djphy.glance.modules.customise.ServiceCustomizationFragment;
 import co.djphy.glance.uiutils.DisplayProperties;
 import co.djphy.glance.uiutils.UiRandomUtils;
 import co.djphy.glance.uiutils.WindowUtils;
@@ -52,6 +62,13 @@ public class MyApplication extends Application {
         return uiHandler;
     }
 
+
+    private Activity visibleActivity;
+
+    public Activity getVisibleActivity(){
+        return visibleActivity;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -76,7 +93,7 @@ public class MyApplication extends Application {
 
             @Override
             public void onActivityResumed(Activity activity) {
-
+                visibleActivity = activity;
             }
 
             @Override
@@ -128,6 +145,16 @@ public class MyApplication extends Application {
     }
 
     private Map<Integer, NavigationDataObject> menuItems = new HashMap<>();
+    ArrayList<DailyProgressDetails> primaryDailyReport = new ArrayList<>();
+
+    public ArrayList<DailyProgressDetails> setPrimaryDailyReport(ArrayList<DailyProgressDetails> dailyReport){
+        primaryDailyReport = new ArrayList<>(dailyReport);
+        return primaryDailyReport;
+    }
+
+    public List<Object> getPrimaryDailyReport() {
+        return new ArrayList<>(primaryDailyReport);
+    }
 
     public NavigationDataObject getNavigationObj(Integer viewId){
         return menuItems.get(viewId);
@@ -137,20 +164,24 @@ public class MyApplication extends Application {
         menuItems.clear();
         menuItems.put(R.id.nav_menu_home, new NavigationDataObject(R.id.nav_menu_home,
                 MainActivity.class, NavigationDataObject.ACTIVITY));
+        menuItems.put(R.id.nav_menu_report, new NavigationDataObject(R.id.nav_menu_report,
+                ReportsActivity.class, NavigationDataObject.ACTIVITY));
+        menuItems.put(R.id.nav_menu_qrt, new NavigationDataObject(R.id.nav_menu_qrt,
+                EmptyActivity.class, ServiceCustomizationFragment.class.getName(),
+                "Quick Response Services", NavigationDataObject.ACTIVITY));
         menuItems.put(R.id.nav_menu_profile, new NavigationDataObject(R.id.nav_menu_profile,
-                null, NavigationDataObject.ACTIVITY));
+                ProfileActivity.class, NavigationDataObject.ACTIVITY));
         menuItems.put(R.id.nav_menu_privacy_policy, new NavigationDataObject(R.id.nav_menu_privacy_policy,
                 WebActivity.class, "Privacy Policy",
                 NavigationDataObject.WEB_ACTIVITY, "urlhere"));
-        menuItems.put(R.id.nav_menu_contact, new NavigationDataObject(R.id.nav_menu_contact,
-                null, NavigationDataObject.ACTIVITY));
+        menuItems.put(R.id.nav_menu_contact, new NavigationDataObject(R.id.nav_menu_contact));
         menuItems.put(R.id.nav_menu_settings, new NavigationDataObject(R.id.nav_menu_settings,
                 null, NavigationDataObject.ACTIVITY));
         menuItems.put(R.id.nav_menu_about, new NavigationDataObject(R.id.nav_menu_about,
                 WebActivity.class, "About Us",
                 NavigationDataObject.WEB_ACTIVITY, "urlhere"));
         menuItems.put(R.id.nav_menu_logout, new NavigationDataObject(R.id.nav_menu_logout,
-                LoginActivity.class, NavigationDataObject.LOGOUT));
+                NormalLoginActivity.class, NavigationDataObject.LOGOUT));
     }
 
     private String fcmToken;
